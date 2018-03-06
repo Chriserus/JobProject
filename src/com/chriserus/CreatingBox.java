@@ -49,14 +49,14 @@ public class CreatingBox {
         GridPane.setConstraints(surnameInput, 1, 1);
 
         //Cancel button placement
-        GridPane.setConstraints(cancelButton, 0, 2);
+        GridPane.setConstraints(cancelButton, 0, 3);
 
         //Submit button placement
-        GridPane.setConstraints(submitButton, 1, 2);
+        GridPane.setConstraints(submitButton, 1, 3);
 
         //isVeg checkbox
         CheckBox isVegBox = new CheckBox("Is a vegetarian?");
-        GridPane.setConstraints(isVegBox, 2, 1);
+        GridPane.setConstraints(isVegBox, 1, 2);
 
 
         //Taking input via submitButton and creating new Customer object
@@ -80,7 +80,7 @@ public class CreatingBox {
         grid.getChildren().addAll(nameLabel, nameInput, surnameLabel, surnameInput, cancelButton, submitButton, isVegBox);
 
 
-        Scene scene = new Scene(grid, 800, 800);
+        Scene scene = new Scene(grid, 500, 200);
         window.setScene(scene);
         window.showAndWait();
 
