@@ -16,7 +16,6 @@ public class CreatingBox {
 
         window.initModality(Modality.APPLICATION_MODAL);
         window.setTitle("Adding new customer");
-        window.setMinWidth(600);
 
         Label label = new Label();
         label.setText("Complete ALL fields to add a customer");
@@ -45,11 +44,32 @@ public class CreatingBox {
         Label nameLabel = new Label("Name:");
         GridPane.setConstraints(nameLabel, 0, 0);
 
+        //Name input
+        TextField nameInput = new TextField();
+        GridPane.setConstraints(nameInput, 1, 0);
 
-        grid.getChildren().addAll(label, cancelButton, submitButton);
-        grid.setAlignment(Pos.CENTER);
+        //Surname label
+        Label surnameLabel = new Label("Surname:");
+        GridPane.setConstraints(surnameLabel, 0, 1);
 
-        Scene scene = new Scene(grid);
+        //Surname input
+        TextField surnameInput = new TextField();
+        GridPane.setConstraints(surnameInput, 1, 1);
+
+        //Cancel button placement
+        GridPane.setConstraints(cancelButton, 0, 2);
+
+        //Submit button placement
+        GridPane.setConstraints(submitButton, 1, 2);
+
+        //isVeg checkbox
+        CheckBox isVegBox = new CheckBox("Are you a vegetarian?");
+        GridPane.setConstraints(isVegBox, 2, 1);
+
+        grid.getChildren().addAll(nameLabel, nameInput, surnameLabel, surnameInput, cancelButton, submitButton, isVegBox);
+
+
+        Scene scene = new Scene(grid, 800, 800);
         window.setScene(scene);
         window.showAndWait();
 
