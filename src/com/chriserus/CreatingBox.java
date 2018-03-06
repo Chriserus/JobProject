@@ -5,7 +5,7 @@ import javafx.scene.*;
 import javafx.scene.layout.*;
 import javafx.scene.control.*;
 import javafx.geometry.*;
-
+import java.util.regex.*;
 
 public class CreatingBox {
 
@@ -13,32 +13,24 @@ public class CreatingBox {
     public static String displayCreator(){
         Stage window = new Stage();
 
-
         window.initModality(Modality.APPLICATION_MODAL);
         window.setTitle("Adding new customer");
 
         Label label = new Label();
         label.setText("Complete ALL fields to add a customer");
 
+        //Cancel button create
         Button cancelButton = new Button();
         cancelButton.setText("Cancel");
-        cancelButton.setOnAction(e-> {
-            answer = "New customer not created";
-            window.close();
-        });
-
-        Button submitButton = new Button();
-        submitButton.setText("Submit");
-        submitButton.setOnAction(e-> {
-            answer = "New customer created";
-            window.close();
-        });
-
 
         GridPane grid = new GridPane();
         grid.setPadding(new Insets(10, 10, 10, 10));
         grid.setVgap(8);
         grid.setHgap(10);
+
+        //Submit button
+        Button submitButton = new Button();
+        submitButton.setText("Submit");
 
         //Name label
         Label nameLabel = new Label("Name:");
@@ -63,8 +55,27 @@ public class CreatingBox {
         GridPane.setConstraints(submitButton, 1, 2);
 
         //isVeg checkbox
-        CheckBox isVegBox = new CheckBox("Are you a vegetarian?");
+        CheckBox isVegBox = new CheckBox("Is a vegetarian?");
         GridPane.setConstraints(isVegBox, 2, 1);
+
+
+        //Taking input via submitButton and creating new Customer object
+        submitButton.setOnAction(e-> {
+            answer = "New customer created";
+            if(isName(nameInput, surnameInput, window)){
+                Customer customer = new Customer(nameInput.getText(), surnameInput.getText(), isVegBox.isSelected());
+                System.out.println("Hello " + customer.getName() + " " + customer.getSurname() + " Are you are veg?: " + customer.getIsVeg());
+            }else{
+                System.out.println("This is not a name/surname");
+            }
+            });
+
+        //Cancel button action
+        cancelButton.setOnAction(e-> {
+            answer = "New customer not created";
+            window.close();
+        });
+
 
         grid.getChildren().addAll(nameLabel, nameInput, surnameLabel, surnameInput, cancelButton, submitButton, isVegBox);
 
@@ -74,6 +85,17 @@ public class CreatingBox {
         window.showAndWait();
 
         return answer;
+    }
+
+    static private boolean isName(TextField inputN, TextField inputS, Stage window){
+        if(!(inputN.getText() + " " + inputS.getText()).matches("[A-Z][a-z]+( [A-Z][a-z]+)?")){
+            inputN.setText("");
+            inputS.setText("");
+            return false;
+        }else{
+            window.close();
+            return true;
+        }
     }
 
 
