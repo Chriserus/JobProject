@@ -14,7 +14,6 @@ import java.io.FileNotFoundException;
 public class MainGUI extends Application{
 
     Stage window;
-    Button button;
 
     public static void main(String[] args) {
         launch(args);
@@ -25,25 +24,48 @@ public class MainGUI extends Application{
         window = primaryStage;
         window.setTitle("Restaurant manager");
 
-        //Making a button with Table icon
-        button = new Button();
-        button.setText("Add a new customer");
-        FileInputStream inputstream = null;
-        try {
-            inputstream = new FileInputStream("resources/icons/formattedTable");
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        }
-        Image tableIcon = new Image(inputstream);
-        button.setGraphic(new ImageView(tableIcon));
-        button.setOnAction(e -> {
-           String result = CreatingBox.displayCreator();
-           System.out.println(result);
+        GridPane grid = new GridPane();
+        grid.setPadding(new Insets(10, 10, 10, 10));
+        grid.setVgap(8);
+        grid.setHgap(10);
+
+        CustomerButton button1 = new CustomerButton();
+        CustomerButton button2 = new CustomerButton();
+        CustomerButton button3 = new CustomerButton();
+        CustomerButton button4 = new CustomerButton();
+        CustomerButton button5 = new CustomerButton();
+        CustomerButton button6 = new CustomerButton();
+
+        Button menu = new Button("MENU");
+        Button save = new Button("SAVE");
+        Button load = new Button("LOAD");
+        Button archive = new Button("ARCHIVE");
+
+
+        GridPane.setConstraints(button1, 0, 0);
+        GridPane.setConstraints(button2, 1, 0);
+        GridPane.setConstraints(button3, 0, 1);
+        GridPane.setConstraints(button4, 1, 1);
+        GridPane.setConstraints(button5, 0, 2);
+        GridPane.setConstraints(button6, 1, 2);
+
+        GridPane.setConstraints(menu, 2, 0);
+        GridPane.setConstraints(archive, 2, 1);
+        GridPane.setConstraints(save, 0, 3);
+        GridPane.setConstraints(load, 1, 3);
+
+
+        menu.setOnAction(e -> {
+            MenuBox.displayMenu();
+        });
+        
+        archive.setOnAction(e -> {
+            ArchiveBox.displayArchive();
         });
 
-        StackPane layout = new StackPane();
-        layout.getChildren().add(button);
-        Scene scene = new Scene(layout, 800, 400);
+        grid.getChildren().addAll(button1, button2, button3, button4, button5, button6, menu, save, load, archive);
+
+        Scene scene = new Scene(grid, 900, 600);
         window.setScene(scene);
         window.show();
     }

@@ -1,11 +1,12 @@
 package com.chriserus;
 
+import javafx.application.*;
 import javafx.stage.*;
 import javafx.scene.*;
 import javafx.scene.layout.*;
 import javafx.scene.control.*;
 import javafx.geometry.*;
-import java.util.regex.*;
+import javafx.scene.image.*;
 
 public class CreatingBox {
 
@@ -16,8 +17,6 @@ public class CreatingBox {
         window.initModality(Modality.APPLICATION_MODAL);
         window.setTitle("Adding new customer");
 
-        Label label = new Label();
-        label.setText("Complete ALL fields to add a customer");
 
         //Cancel button create
         Button cancelButton = new Button();
@@ -25,7 +24,7 @@ public class CreatingBox {
 
         GridPane grid = new GridPane();
         grid.setPadding(new Insets(10, 10, 10, 10));
-        grid.setVgap(8);
+        grid.setVgap(10);
         grid.setHgap(10);
 
         //Submit button
@@ -80,7 +79,7 @@ public class CreatingBox {
         grid.getChildren().addAll(nameLabel, nameInput, surnameLabel, surnameInput, cancelButton, submitButton, isVegBox);
 
 
-        Scene scene = new Scene(grid, 500, 200);
+        Scene scene = new Scene(grid, 300, 200);
         window.setScene(scene);
         window.showAndWait();
 

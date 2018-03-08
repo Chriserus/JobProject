@@ -11,27 +11,21 @@ import javafx.scene.image.*;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 
-public class CustomerButton extends Button {
-    public CustomerButton(){
-        super("Add a new customer");
+public class TableButton extends Button {
+    public TableButton() {
+        super();
         FileInputStream inputstream = null;
         try {
-            inputstream = new FileInputStream("resources/icons/formattedTable");
+            inputstream = new FileInputStream("resources/icons/54901");
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         }
+
         Image tableIcon = new Image(inputstream);
         this.setGraphic(new ImageView(tableIcon));
+
         this.setOnAction(e -> {
-            TableBox.displayTable();
+            CreatingBox.displayCreator();
         });
     }
-
-
-
-
-
-
-
-
 }
