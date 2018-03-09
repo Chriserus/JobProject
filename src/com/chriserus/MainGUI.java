@@ -21,6 +21,7 @@ public class MainGUI extends Application{
 
     @Override
     public void start(Stage primaryStage){
+        //setting whole dashboard
         window = primaryStage;
         window.setTitle("Restaurant manager");
 
@@ -29,6 +30,8 @@ public class MainGUI extends Application{
         grid.setVgap(8);
         grid.setHgap(10);
 
+
+        //creating all the buttons
         CustomerButton button1 = new CustomerButton();
         CustomerButton button2 = new CustomerButton();
         CustomerButton button3 = new CustomerButton();
@@ -42,6 +45,8 @@ public class MainGUI extends Application{
         Button archive = new Button("ARCHIVE");
 
 
+
+        //where to put buttons on grid?
         GridPane.setConstraints(button1, 0, 0);
         GridPane.setConstraints(button2, 1, 0);
         GridPane.setConstraints(button3, 0, 1);
@@ -54,15 +59,16 @@ public class MainGUI extends Application{
         GridPane.setConstraints(save, 0, 3);
         GridPane.setConstraints(load, 1, 3);
 
-
+        //setting actions on click
         menu.setOnAction(e -> {
             MenuBox.displayMenu();
         });
-        
+
         archive.setOnAction(e -> {
             ArchiveBox.displayArchive();
         });
 
+        //adding buttons to the grid
         grid.getChildren().addAll(button1, button2, button3, button4, button5, button6, menu, save, load, archive);
 
         Scene scene = new Scene(grid, 900, 600);

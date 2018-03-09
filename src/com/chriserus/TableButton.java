@@ -14,14 +14,14 @@ import java.io.FileNotFoundException;
 public class TableButton extends Button {
     public TableButton() {
         super();
-        FileInputStream inputstream = null;
+        FileInputStream inputStream = null;
         try {
-            inputstream = new FileInputStream("resources/icons/54901");
+            inputStream = new FileInputStream("resources/icons/54901");
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         }
 
-        Image tableIcon = new Image(inputstream);
+        Image tableIcon = new Image(inputStream);
         this.setGraphic(new ImageView(tableIcon));
 
         this.setOnAction(e -> {
