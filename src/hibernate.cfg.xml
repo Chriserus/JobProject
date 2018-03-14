@@ -1,0 +1,32 @@
+<?xml version = "1.0" encoding = "utf-8"?>
+<!DOCTYPE hibernate-configuration SYSTEM
+        "http://www.hibernate.org/dtd/hibernate-configuration-3.0.dtd">
+<hibernate-configuration>
+    <session-factory>
+        <property name="connection.url">jdbc:mysql://localhost:3306/restaurant</property>
+        <property name="connection.driver_class">com.mysql.jdbc.Driver</property>
+        <property name="connection.username">krzysztof</property>
+        <property name="connection.password">admin</property>
+
+        <property name="hibernate.current_session_context_class">thread</property>
+
+        <property name="hibernate.dialect">org.hibernate.dialect.MySQLDialect</property>
+        <property name="show_sql">true</property>
+
+
+        <mapping resource="com/chriserus/hibernate/ClientEntity.hbm.xml"/>
+        <mapping class="com.chriserus.hibernate.ClientEntity"/>
+        <mapping resource="com/chriserus/hibernate/ItemEntity.hbm.xml"/>
+        <mapping class="com.chriserus.hibernate.ItemEntity"/>
+        <mapping resource="com/chriserus/hibernate/PurchaseEntity.hbm.xml"/>
+        <mapping class="com.chriserus.hibernate.PurchaseEntity"/>
+
+
+        <!-- Assume test is the database name -->
+
+
+        <!-- List of XML mapping files -->
+
+
+    </session-factory>
+</hibernate-configuration>

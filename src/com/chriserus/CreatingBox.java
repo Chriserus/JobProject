@@ -62,9 +62,9 @@ public class CreatingBox {
         submitButton.setOnAction(e-> {
             answer = "New customer created";
             if(isName(nameInput, surnameInput, window)){
-                Customer customer = new Customer(nameInput.getText(), surnameInput.getText(), isVegBox.isSelected());
+               // Customer customer = new Customer(nameInput.getText(), surnameInput.getText(), isVegBox.isSelected());
                 OrderBox.displayOrder();
-                System.out.println("Hello " + customer.getName() + " " + customer.getSurname() + " Are you are veg?: " + customer.getIsVeg());
+               // System.out.println("Hello " + customer.getName() + " " + customer.getSurname() + " Are you are veg?: " + customer.getIsVeg());
             }else{
                 System.out.println("This is not a name/surname");
             }

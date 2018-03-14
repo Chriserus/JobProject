@@ -1,5 +1,6 @@
 package com.chriserus;
 
+import com.chriserus.hibernate.ClientEntity;
 import javafx.application.*;
 import javafx.stage.*;
 import javafx.scene.*;
@@ -7,19 +8,42 @@ import javafx.scene.layout.*;
 import javafx.scene.control.*;
 import javafx.geometry.*;
 import javafx.scene.image.*;
+import org.hibernate.Session;
+import org.hibernate.SessionFactory;
+import org.hibernate.cfg.Configuration;
 
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 
-public class MainGUI extends Application{
+public class MainGUI /*extends Application*/ {
 
-    Stage window;
+    //Stage window;
 
     public static void main(String[] args) {
-        launch(args);
+        SessionFactory factory = new Configuration()
+                .configure("hibernate.cfg.xml")
+                .addAnnotatedClass(ClientEntity.class)
+                .buildSessionFactory();
+        Session session = factory.getCurrentSession();
+        try {
+            System.out.println("Creating new client object...");
+            ClientEntity tempClient = new ClientEntity();
+            tempClient.setName("Marek");
+            tempClient.setSurname("Browarek");
+            tempClient.setVegetarian(true);
+            session.beginTransaction();
+            System.out.println("Saving new client object...");
+            session.save(tempClient);
+            session.getTransaction().commit();
+            System.out.println("Done new client object...");
+
+        } finally {
+            factory.close();
+        }
+        //  launch(args);
     }
 
-    @Override
+  /*  @Override
     public void start(Stage primaryStage){
         //setting whole dashboard
         window = primaryStage;
@@ -75,5 +99,5 @@ public class MainGUI extends Application{
         window.setScene(scene);
         window.show();
     }
-
+*/
 }

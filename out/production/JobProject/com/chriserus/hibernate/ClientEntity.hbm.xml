@@ -1,0 +1,36 @@
+<?xml version='1.0' encoding='utf-8'?>
+<!DOCTYPE hibernate-mapping PUBLIC
+    "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+    "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+
+    <class name="com.chriserus.hibernate.ClientEntity" table="Client" schema="restaurant">
+        <id name="id">
+            <column name="id" sql-type="int(10) unsigned"/>
+        </id>
+        <property name="name">
+            <column name="name" sql-type="varchar(150)" length="150"/>
+        </property>
+        <property name="surname">
+            <column name="surname" sql-type="varchar(150)" length="150"/>
+        </property>
+        <property name="vegetarian">
+            <column name="vegetarian" sql-type="tinyint(1) unsigned"/>
+        </property>
+        <property name="tableNo">
+            <column name="tableNo" sql-type="int(11) unsigned"/>
+        </property>
+        <property name="finish">
+            <column name="finish" sql-type="datetime"/>
+        </property>
+        <property name="orderNo">
+            <column name="orderNo" sql-type="int(11) unsigned"/>
+        </property>
+        <property name="orderTotal">
+            <column name="orderTotal" sql-type="double" precision="-1" />
+        </property>
+        <property name="caloriesTotal">
+            <column name="caloriesTotal" sql-type="int(11) unsigned"/>
+        </property>
+    </class>
+</hibernate-mapping>
