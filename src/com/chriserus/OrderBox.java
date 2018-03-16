@@ -12,9 +12,13 @@ import javafx.scene.layout.*;
 import javafx.scene.control.*;
 import javafx.geometry.*;
 import javafx.scene.image.*;
+import org.hibernate.Session;
+import org.hibernate.SessionFactory;
+
+import java.util.List;
 
 
-public class OrderBox {
+public class OrderBox extends MenuBox{
 
     public static void displayOrder(){
         Stage window = new Stage();
@@ -57,10 +61,4 @@ public class OrderBox {
         window.show();
     }
 
-    public static ObservableList<ItemEntity> getProduct(){
-        ObservableList<ItemEntity> products = FXCollections.observableArrayList();
-        products.add(new ItemEntity("Chicken", 21.21, 143, false));
-        products.add(new ItemEntity("Salad", 32.86, 3423, true));
-        return products;
-    }
 }
