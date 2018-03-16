@@ -1,6 +1,11 @@
 package com.chriserus;
 
+import com.chriserus.hibernate.ClientEntity;
+import com.chriserus.hibernate.ItemEntity;
 import javafx.application.*;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
+import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.*;
 import javafx.scene.*;
 import javafx.scene.layout.*;
@@ -13,19 +18,49 @@ public class OrderBox {
 
     public static void displayOrder(){
         Stage window = new Stage();
+        //Adding table
+        TableView<ItemEntity> table = new TableView<>();
 
+        //Name
+        TableColumn<ItemEntity, String> nameCol = new TableColumn<>("Name");
+        nameCol.setMinWidth(200);
+        nameCol.setCellValueFactory(new PropertyValueFactory<>("name"));
 
+        //Price
+        TableColumn<ItemEntity, Double> priceCol = new TableColumn<>("Price");
+        priceCol.setMinWidth(200);
+        priceCol.setCellValueFactory(new PropertyValueFactory<>("price"));
 
+        //Calories
+        TableColumn<ItemEntity, Integer> caloriesCol = new TableColumn<>("Calories");
+        caloriesCol.setMinWidth(200);
+        caloriesCol.setCellValueFactory(new PropertyValueFactory<>("calories"));
+
+        //Vegetarian
+        TableColumn<ItemEntity, Boolean> vegetarianCol = new TableColumn<>("Vegetarian");
+        vegetarianCol.setMinWidth(200);
+        vegetarianCol.setCellValueFactory(new PropertyValueFactory<>("vegetarian"));
+
+        table.setItems(getProduct());
+        table.getColumns().addAll(nameCol,priceCol,caloriesCol,vegetarianCol);
+
+        VBox vBox = new VBox();
+        vBox.getChildren().addAll(table);
         window.initModality(Modality.APPLICATION_MODAL);
         window.setTitle("Order creator");
 
-        GridPane grid = new GridPane();
-        grid.setPadding(new Insets(10, 10, 10, 10));
-        grid.setVgap(8);
-        grid.setHgap(10);
 
-        Scene scene = new Scene(grid, 800, 900);
+
+
+        Scene scene = new Scene(vBox);
         window.setScene(scene);
-        window.showAndWait();
+        window.show();
+    }
+
+    public static ObservableList<ItemEntity> getProduct(){
+        ObservableList<ItemEntity> products = FXCollections.observableArrayList();
+        products.add(new ItemEntity("Chicken", 21.21, 143, false));
+        products.add(new ItemEntity("Salad", 32.86, 3423, true));
+        return products;
     }
 }

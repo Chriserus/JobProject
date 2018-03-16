@@ -12,6 +12,16 @@ public class ItemEntity {
     private int calories;
     private boolean vegetarian;
 
+    public ItemEntity() {
+    }
+
+    public ItemEntity(String name, double price, int calories, boolean vegetarian) {
+        this.name = name;
+        this.price = price;
+        this.calories = calories;
+        this.vegetarian = vegetarian;
+    }
+
     @Id
     @Column(name = "id", nullable = false)
     public int getId() {

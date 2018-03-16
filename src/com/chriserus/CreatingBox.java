@@ -1,5 +1,7 @@
 package com.chriserus;
 
+import com.chriserus.hibernate.ClientEntity;
+
 import javafx.application.*;
 import javafx.stage.*;
 import javafx.scene.*;
@@ -7,6 +9,8 @@ import javafx.scene.layout.*;
 import javafx.scene.control.*;
 import javafx.geometry.*;
 import javafx.scene.image.*;
+import org.hibernate.Session;
+import org.hibernate.SessionFactory;
 
 public class CreatingBox {
 
@@ -62,9 +66,22 @@ public class CreatingBox {
         submitButton.setOnAction(e-> {
             answer = "New customer created";
             if(isName(nameInput, surnameInput, window)){
-               // Customer customer = new Customer(nameInput.getText(), surnameInput.getText(), isVegBox.isSelected());
+                //getting the factory
+                SessionFactory sessionFactory = HibernateFactory.getSessionFactory();
+                Session session = sessionFactory.getCurrentSession();
+                //Creating a customer
+                    ClientEntity tempClient = new ClientEntity();
+                    tempClient.setName(nameInput.getText());
+                    tempClient.setSurname(surnameInput.getText());
+                    tempClient.setVegetarian(isVegBox.isSelected());
+                    session.beginTransaction();
+                    System.out.println("Saving new client object...");
+                    session.save(tempClient);
+                    session.getTransaction().commit();
+                    System.out.println("Done new client object...");
+
+
                 OrderBox.displayOrder();
-               // System.out.println("Hello " + customer.getName() + " " + customer.getSurname() + " Are you are veg?: " + customer.getIsVeg());
             }else{
                 System.out.println("This is not a name/surname");
             }
