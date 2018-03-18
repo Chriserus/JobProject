@@ -78,6 +78,10 @@ public class MainGUI extends Application {
         grid.getChildren().addAll(button1, button2, button3, button4, button5, button6, menu, save, load, archive);
 
         Scene scene = new Scene(grid, 900, 600);
+        window.setOnCloseRequest(e -> {
+            Platform.exit();
+            HibernateFactory.close();
+        });
         window.setScene(scene);
         window.show();
     }

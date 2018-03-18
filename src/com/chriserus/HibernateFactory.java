@@ -2,6 +2,7 @@ package com.chriserus;
 
 import com.chriserus.hibernate.ClientEntity;
 import org.hibernate.SessionFactory;
+import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
 import org.hibernate.cfg.Configuration;
 
 public class HibernateFactory {
@@ -20,6 +21,10 @@ public class HibernateFactory {
                     .buildSessionFactory();
         }
         return factory;
+    }
+
+    public static void close(){
+        if(factory!= null) factory.close();
     }
 
 }

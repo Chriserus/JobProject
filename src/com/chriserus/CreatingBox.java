@@ -75,11 +75,8 @@ public class CreatingBox {
                     tempClient.setSurname(surnameInput.getText());
                     tempClient.setVegetarian(isVegBox.isSelected());
                     session.beginTransaction();
-                    System.out.println("Saving new client object...");
                     session.save(tempClient);
                     session.getTransaction().commit();
-                    System.out.println("Done new client object...");
-
 
                 OrderBox.displayOrder();
             }else{
