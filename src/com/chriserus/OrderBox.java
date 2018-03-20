@@ -21,6 +21,9 @@ import java.util.List;
 public class OrderBox extends MenuBox{
 
     private static TableView<ItemEntity> table, tableOrder;
+    private static TextField caloriesSum, priceSum;
+   private static double sum;
+    private static int sum2;
 
     public static void displayOrder(){
         Stage window = new Stage();
@@ -81,12 +84,12 @@ public class OrderBox extends MenuBox{
         Button finalizeButton = new Button("Finalize");
 
         //Adding text fields for order
-        TextField priceSum = new TextField();
+        priceSum = new TextField();
         priceSum.setPromptText("Total");
         priceSum.setEditable(false);
         priceSum.setMinWidth(100);
 
-        TextField caloriesSum = new TextField();
+        caloriesSum = new TextField();
         caloriesSum.setPromptText("Calories");
         caloriesSum.setEditable(false);
         caloriesSum.setMinWidth(100);
@@ -131,7 +134,32 @@ public class OrderBox extends MenuBox{
         window.show();
     }
 
+    private static double sumPrice(){
+        ObservableList<ItemEntity> wholeOrder;
+        sum = 0;
+        wholeOrder = tableOrder.getItems();
+        for(ItemEntity item : wholeOrder){
+            sum += item.getPrice();
+        }
+        return sum;
+
+
+    }
+
+    private static int sumCalories(){
+        ObservableList<ItemEntity> wholeOrder;
+        sum2 = 0;
+        wholeOrder = tableOrder.getItems();
+        for(ItemEntity item : wholeOrder){
+            sum2 += item.getCalories();
+        }
+        return sum2;
+
+
+    }
+
     private static void finalizeButtonClicked() {
+
 
     }
 
@@ -139,6 +167,10 @@ public class OrderBox extends MenuBox{
         ObservableList<ItemEntity> productSelected;
         productSelected = table.getSelectionModel().getSelectedItems();
         tableOrder.getItems().addAll(productSelected);
+        String value = String.format("%.2f", sumPrice());
+        priceSum.setText(value);
+        String calories = Integer.toString(sumCalories());
+        caloriesSum.setText(calories);
     }
 
     private static void deleteButtonClicked(){
@@ -146,6 +178,10 @@ public class OrderBox extends MenuBox{
         allProducts = tableOrder.getItems();
         productSelected = tableOrder.getSelectionModel().getSelectedItems();
         productSelected.forEach(allProducts::remove);
+        String price = String.format("%.2f", sumPrice());
+        String calories = Integer.toString(sumCalories());
+        priceSum.setText(price);
+        caloriesSum.setText(calories);
 
     }
 
