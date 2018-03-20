@@ -53,7 +53,7 @@ public class MenuBox {
         vegetarianCol.setMinWidth(200);
         vegetarianCol.setCellValueFactory(new PropertyValueFactory<>("vegetarian"));
 
-        table.setItems(getProduct());
+        table.setItems(getProduct(false));
         table.setMinHeight(800);
         table.getColumns().addAll(nameCol,priceCol,caloriesCol,vegetarianCol);
 
@@ -100,16 +100,26 @@ public class MenuBox {
         window.show();
     }
 
-    public static ObservableList<ItemEntity> getProduct(){
+    public static ObservableList<ItemEntity> getProduct(boolean isVeg){
 
+        ObservableList<ItemEntity> products;
         //getting the factory
         SessionFactory sessionFactory = HibernateFactory.getSessionFactory();
         Session session = sessionFactory.getCurrentSession();
         //getting the list of items
-        session.beginTransaction();
-        List<ItemEntity> itemsList = session.createQuery("from ItemEntity ").getResultList();
-        ObservableList<ItemEntity> products = FXCollections.observableArrayList(itemsList);
-        session.getTransaction().commit();
+
+        if(isVeg){
+            session.beginTransaction();
+            List<ItemEntity> itemsList = session.createQuery("from ItemEntity where vegetarian=true ").getResultList();
+             products = FXCollections.observableArrayList(itemsList);
+            session.getTransaction().commit();
+        }else{
+            session.beginTransaction();
+            List<ItemEntity> itemsList = session.createQuery("from ItemEntity ").getResultList();
+            products = FXCollections.observableArrayList(itemsList);
+            session.getTransaction().commit();
+        }
+
 
         return products;
     }

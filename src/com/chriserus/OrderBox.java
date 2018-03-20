@@ -15,6 +15,7 @@ import javafx.scene.image.*;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 
+import java.awt.font.TextLayout;
 import java.util.List;
 
 
@@ -22,10 +23,14 @@ public class OrderBox extends MenuBox{
 
     private static TableView<ItemEntity> table, tableOrder;
     private static TextField caloriesSum, priceSum;
-   private static double sum;
+    private static double sum;
     private static int sum2;
+    private static ObservableList<ItemEntity> productSelected, allProducts, wholeOrder;
 
-    public static void displayOrder(){
+
+
+    public static void displayOrder(ClientEntity client){
+
         Stage window = new Stage();
         //Adding table
          table = new TableView<>();
@@ -75,8 +80,12 @@ public class OrderBox extends MenuBox{
 
         table.getColumns().addAll(nameCol,priceCol,caloriesCol,vegetarianCol);
         tableOrder.getColumns().addAll(nameColO,priceColO,caloriesColO,vegetarianColO);
-        table.setItems(getProduct());
 
+        if(client.isVegetarian()){
+            table.setItems(getProduct(true));
+        }else {
+            table.setItems(getProduct(false));
+        }
 
 
         Button addButton = new Button("Add");
@@ -87,12 +96,16 @@ public class OrderBox extends MenuBox{
         priceSum = new TextField();
         priceSum.setPromptText("Total");
         priceSum.setEditable(false);
-        priceSum.setMinWidth(100);
+        priceSum.setMinWidth(50);
+
+        Label priceLabel = new Label("Total:");
 
         caloriesSum = new TextField();
         caloriesSum.setPromptText("Calories");
         caloriesSum.setEditable(false);
-        caloriesSum.setMinWidth(100);
+        caloriesSum.setMinWidth(50);
+
+        Label caloriesLabel = new Label("Calories:");
 
         addButton.setOnAction(e->addButtonClicked());
         removeButton.setOnAction(e->deleteButtonClicked());
@@ -103,27 +116,39 @@ public class OrderBox extends MenuBox{
         GridPane gp = new GridPane();
         gp.setHgap(10);
         gp.setVgap(10);
-       // gp.setPadding(new Insets(10,10,10,10));
 
         VBox vBox = new VBox();
         vBox.setSpacing(10);
         vBox.setAlignment(Pos.CENTER);
         vBox.getChildren().addAll(addButton, removeButton);
 
+        //Price VBox
+        VBox vBox1 = new VBox();
+        vBox1.setSpacing(10);
+        vBox1.setAlignment(Pos.CENTER_LEFT);
+        vBox1.getChildren().addAll(priceLabel, priceSum);
+
+        //Calories vBox
+        VBox vBox2 = new VBox();
+        vBox2.setSpacing(10);
+        vBox2.setAlignment(Pos.CENTER_LEFT);
+        vBox2.getChildren().addAll(caloriesLabel, caloriesSum);
+
         HBox hBox = new HBox();
         hBox.setSpacing(10);
         hBox.setAlignment(Pos.CENTER_RIGHT);
         hBox.setPadding(new Insets(10,10,10,10));
-        hBox.getChildren().addAll(caloriesSum, priceSum, finalizeButton);
+        hBox.getChildren().addAll(vBox2, vBox1, finalizeButton);
 
 
-        GridPane.setConstraints(table, 0, 0, 1, 2);
+
+        GridPane.setConstraints(table, 0, 0, 1, 3);
         GridPane.setConstraints(vBox, 1, 0);
         GridPane.setConstraints(tableOrder, 2, 0);
-        GridPane.setConstraints(hBox,2,1);
+        GridPane.setConstraints(hBox,2,2);
 
 
-        gp.getChildren().addAll(table, vBox, tableOrder, hBox);
+        gp.getChildren().addAll(table, vBox, tableOrder,  hBox);
 
         Scene scene = new Scene(gp);
 
@@ -135,7 +160,6 @@ public class OrderBox extends MenuBox{
     }
 
     private static double sumPrice(){
-        ObservableList<ItemEntity> wholeOrder;
         sum = 0;
         wholeOrder = tableOrder.getItems();
         for(ItemEntity item : wholeOrder){
@@ -147,7 +171,6 @@ public class OrderBox extends MenuBox{
     }
 
     private static int sumCalories(){
-        ObservableList<ItemEntity> wholeOrder;
         sum2 = 0;
         wholeOrder = tableOrder.getItems();
         for(ItemEntity item : wholeOrder){
@@ -164,7 +187,7 @@ public class OrderBox extends MenuBox{
     }
 
     private static void addButtonClicked(){
-        ObservableList<ItemEntity> productSelected;
+
         productSelected = table.getSelectionModel().getSelectedItems();
         tableOrder.getItems().addAll(productSelected);
         String value = String.format("%.2f", sumPrice());
@@ -174,7 +197,7 @@ public class OrderBox extends MenuBox{
     }
 
     private static void deleteButtonClicked(){
-        ObservableList<ItemEntity> productSelected, allProducts;
+
         allProducts = tableOrder.getItems();
         productSelected = tableOrder.getSelectionModel().getSelectedItems();
         productSelected.forEach(allProducts::remove);

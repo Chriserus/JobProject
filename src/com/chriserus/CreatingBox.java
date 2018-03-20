@@ -14,8 +14,9 @@ import org.hibernate.SessionFactory;
 
 public class CreatingBox {
 
-    static String answer;
-    public static String displayCreator(){
+
+    static ClientEntity tempClient;
+    public static void displayCreator(){
         Stage window = new Stage();
 
         window.initModality(Modality.APPLICATION_MODAL);
@@ -64,7 +65,7 @@ public class CreatingBox {
 
         //Taking input via submitButton and creating new Customer object
         submitButton.setOnAction(e-> {
-            answer = "New customer created";
+
             if(isName(nameInput, surnameInput, window)){
                 //getting the factory
                 SessionFactory sessionFactory = HibernateFactory.getSessionFactory();
@@ -78,15 +79,14 @@ public class CreatingBox {
                     session.save(tempClient);
                     session.getTransaction().commit();
 
-                OrderBox.displayOrder();
+                OrderBox.displayOrder(tempClient);
             }else{
-                System.out.println("This is not a name/surname");
+                AlertBox.display("This is not a valid name/surname!");
             }
             });
 
         //Cancel button action
         cancelButton.setOnAction(e-> {
-            answer = "New customer not created";
             window.close();
         });
 
@@ -98,7 +98,6 @@ public class CreatingBox {
         window.setScene(scene);
         window.showAndWait();
 
-        return answer;
     }
 
     static private boolean isName(TextField inputN, TextField inputS, Stage window){
