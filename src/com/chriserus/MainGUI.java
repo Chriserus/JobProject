@@ -1,34 +1,27 @@
 package com.chriserus;
 
-import com.chriserus.hibernate.ClientEntity;
-import javafx.application.*;
-import javafx.stage.*;
-import javafx.scene.*;
-import javafx.scene.layout.*;
-import javafx.scene.control.*;
-import javafx.geometry.*;
-import javafx.scene.image.*;
-import org.hibernate.Session;
-import org.hibernate.SessionFactory;
-import org.hibernate.cfg.Configuration;
+import javafx.application.Application;
+import javafx.application.Platform;
+import javafx.geometry.Insets;
+import javafx.scene.Scene;
+import javafx.scene.control.Button;
+import javafx.scene.layout.GridPane;
+import javafx.stage.Stage;
 
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
+import java.util.ArrayList;
 
 public class MainGUI extends Application {
 
-
-    Stage window;
 
     public static void main(String[] args) {
          launch(args);
     }
 
     @Override
-    public void start(Stage primaryStage){
+    public void start(Stage window){
+        ArrayList<CustomerButton> customerButtons = new ArrayList<>();
 
         //setting whole dashboard
-        window = primaryStage;
         window.setTitle("Restaurant manager");
 
         GridPane grid = new GridPane();
@@ -37,28 +30,20 @@ public class MainGUI extends Application {
         grid.setHgap(10);
 
 
-        //creating all the buttons
-        CustomerButton button1 = new CustomerButton();
-        CustomerButton button2 = new CustomerButton();
-        CustomerButton button3 = new CustomerButton();
-        CustomerButton button4 = new CustomerButton();
-        CustomerButton button5 = new CustomerButton();
-        CustomerButton button6 = new CustomerButton();
+        //creating and placing all the buttons
+        for(int i = 0; i<2; i++){
+            for(int j = 0; j<3; j++){
+                CustomerButton button = new CustomerButton();
+                GridPane.setConstraints(button, i, j);
+                customerButtons.add(button);
+            }
+        }
 
         Button menu = new Button("MENU");
         Button save = new Button("SAVE");
         Button load = new Button("LOAD");
         Button archive = new Button("ARCHIVE");
 
-
-
-        //where to put buttons on grid?
-        GridPane.setConstraints(button1, 0, 0);
-        GridPane.setConstraints(button2, 1, 0);
-        GridPane.setConstraints(button3, 0, 1);
-        GridPane.setConstraints(button4, 1, 1);
-        GridPane.setConstraints(button5, 0, 2);
-        GridPane.setConstraints(button6, 1, 2);
 
         GridPane.setConstraints(menu, 2, 0);
         GridPane.setConstraints(archive, 2, 1);
@@ -67,22 +52,27 @@ public class MainGUI extends Application {
 
         //setting actions on click
         menu.setOnAction(e -> {
-            MenuBox.displayMenu();
+            MenuBox box = new MenuBox();
+            box.displayMenu();
         });
 
         archive.setOnAction(e -> {
-            ArchiveBox.displayArchive();
+            ArchiveBox box = new ArchiveBox();
+            box.displayArchive();
         });
 
         //adding buttons to the grid
-        grid.getChildren().addAll(button1, button2, button3, button4, button5, button6, menu, save, load, archive);
+        grid.getChildren().addAll(customerButtons);
+        grid.getChildren().addAll(menu, save, load, archive);
 
         Scene scene = new Scene(grid, 900, 600);
-        window.setOnCloseRequest(e -> {
-            Platform.exit();
-            HibernateFactory.close();
-        });
+        window.setOnCloseRequest(e -> appClose());
         window.setScene(scene);
         window.show();
+    }
+
+    private void appClose(){
+        Platform.exit();
+        HibernateFactory.close();
     }
 }

@@ -1,27 +1,27 @@
 package com.chriserus;
 
 import com.chriserus.hibernate.ItemEntity;
-import javafx.application.*;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.scene.control.cell.PropertyValueFactory;
-import javafx.stage.*;
-import javafx.scene.*;
-import javafx.scene.layout.*;
+import javafx.geometry.Insets;
+import javafx.scene.Scene;
 import javafx.scene.control.*;
-import javafx.geometry.*;
-import javafx.scene.image.*;
+import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.layout.HBox;
+import javafx.scene.layout.VBox;
+import javafx.stage.Modality;
+import javafx.stage.Stage;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 
 import java.util.List;
 
 public class MenuBox {
-    private static TextField nameInput, priceInput, caloriesInput;
-    private static CheckBox isVegBox;
-    private static TableView<ItemEntity> table;
+    private  TextField nameInput, priceInput, caloriesInput;
+    private  CheckBox isVegBox;
+    private  TableView<ItemEntity> table;
 
-    public static void displayMenu(){
+    public  void displayMenu(){
         Stage window = new Stage();
 
         //Adding labels and textFields
@@ -100,8 +100,9 @@ public class MenuBox {
         window.show();
     }
 
-    public static ObservableList<ItemEntity> getProduct(boolean isVeg){
+    ObservableList<ItemEntity> getProduct(boolean isVeg){
 
+        List<ItemEntity> itemsList;
         ObservableList<ItemEntity> products;
         //getting the factory
         SessionFactory sessionFactory = HibernateFactory.getSessionFactory();
@@ -110,21 +111,19 @@ public class MenuBox {
 
         if(isVeg){
             session.beginTransaction();
-            List<ItemEntity> itemsList = session.createQuery("from ItemEntity where vegetarian=true ").getResultList();
-             products = FXCollections.observableArrayList(itemsList);
+            itemsList = session.createQuery("from ItemEntity where vegetarian=true ").getResultList();
+            products = FXCollections.observableArrayList(itemsList);
             session.getTransaction().commit();
         }else{
             session.beginTransaction();
-            List<ItemEntity> itemsList = session.createQuery("from ItemEntity ").getResultList();
+            itemsList = session.createQuery("from ItemEntity ").getResultList();
             products = FXCollections.observableArrayList(itemsList);
             session.getTransaction().commit();
         }
-
-
         return products;
     }
 
-    private static void addButtonClicked(){
+    private void addButtonClicked(){
         ItemEntity product = new ItemEntity();
         product.setName(nameInput.getText());
         product.setPrice(Double.parseDouble(priceInput.getText()));
@@ -148,7 +147,7 @@ public class MenuBox {
 
     }
 
-    private static void deleteButtonClicked(){
+    private void deleteButtonClicked(){
         ObservableList<ItemEntity> productSelected, allProducts;
         allProducts = table.getItems();
         productSelected = table.getSelectionModel().getSelectedItems();

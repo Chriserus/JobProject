@@ -1,12 +1,8 @@
 package com.chriserus;
 
-import javafx.application.*;
-import javafx.stage.*;
-import javafx.scene.*;
-import javafx.scene.layout.*;
-import javafx.scene.control.*;
-import javafx.geometry.*;
-import javafx.scene.image.*;
+import javafx.scene.control.Button;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -14,16 +10,17 @@ import java.io.FileNotFoundException;
 public class CustomerButton extends Button {
     public CustomerButton(){
         super("Add a new customer");
-        FileInputStream inputstream = null;
+        FileInputStream inputStream = null;
         try {
-            inputstream = new FileInputStream("resources/icons/formattedTable");
+            inputStream = new FileInputStream("resources/icons/formattedTable");
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         }
-        Image tableIcon = new Image(inputstream);
+        Image tableIcon = new Image(inputStream);
         this.setGraphic(new ImageView(tableIcon));
         this.setOnAction(e -> {
-            TableBox.displayTable();
+            TableBox box = new TableBox();
+            box.display();
         });
     }
 

@@ -2,12 +2,11 @@ package com.chriserus;
 
 import com.chriserus.hibernate.ClientEntity;
 import org.hibernate.SessionFactory;
-import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
 import org.hibernate.cfg.Configuration;
 
 public class HibernateFactory {
 
-    public static SessionFactory factory;
+    private static SessionFactory factory;
 
     private HibernateFactory(){
 

@@ -2,34 +2,26 @@ package com.chriserus;
 
 import com.chriserus.hibernate.ClientEntity;
 import com.chriserus.hibernate.ItemEntity;
-import javafx.application.*;
-import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.scene.control.cell.PropertyValueFactory;
-import javafx.stage.*;
-import javafx.scene.*;
-import javafx.scene.layout.*;
+import javafx.geometry.Insets;
+import javafx.geometry.Pos;
+import javafx.scene.Scene;
 import javafx.scene.control.*;
-import javafx.geometry.*;
-import javafx.scene.image.*;
-import org.hibernate.Session;
-import org.hibernate.SessionFactory;
-
-import java.awt.font.TextLayout;
-import java.util.List;
+import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.layout.GridPane;
+import javafx.scene.layout.HBox;
+import javafx.scene.layout.VBox;
+import javafx.stage.Modality;
+import javafx.stage.Stage;
 
 
 public class OrderBox extends MenuBox{
-
-    private static TableView<ItemEntity> table, tableOrder;
-    private static TextField caloriesSum, priceSum;
-    private static double sum;
-    private static int sum2;
-    private static ObservableList<ItemEntity> productSelected, allProducts, wholeOrder;
+    private  TableView<ItemEntity> table, tableOrder;
+    private  TextField caloriesSum, priceSum;
+    private  ObservableList<ItemEntity> productSelected, wholeOrder;
 
 
-
-    public static void displayOrder(ClientEntity client){
+    public void display(ClientEntity client){
 
         Stage window = new Stage();
         //Adding table
@@ -159,53 +151,49 @@ public class OrderBox extends MenuBox{
         window.show();
     }
 
-    private static double sumPrice(){
-        sum = 0;
+    private double sumPrice(){
+        double sum = 0;
         wholeOrder = tableOrder.getItems();
-        for(ItemEntity item : wholeOrder){
+        for(ItemEntity item : wholeOrder)
             sum += item.getPrice();
-        }
         return sum;
-
-
     }
 
-    private static int sumCalories(){
-        sum2 = 0;
+    private int sumCalories(){
+        int sum = 0;
         wholeOrder = tableOrder.getItems();
-        for(ItemEntity item : wholeOrder){
-            sum2 += item.getCalories();
-        }
-        return sum2;
+        for(ItemEntity item : wholeOrder)
+            sum += item.getCalories();
+        return sum;
+    }
+
+
+
+    private void finalizeButtonClicked() {
 
 
     }
 
-    private static void finalizeButtonClicked() {
-
-
-    }
-
-    private static void addButtonClicked(){
-
+    private void addButtonClicked(){
         productSelected = table.getSelectionModel().getSelectedItems();
         tableOrder.getItems().addAll(productSelected);
-        String value = String.format("%.2f", sumPrice());
-        priceSum.setText(value);
+        String price = String.format("%.2f", sumPrice());
         String calories = Integer.toString(sumCalories());
-        caloriesSum.setText(calories);
+        resetSum(price, calories);
     }
 
-    private static void deleteButtonClicked(){
-
-        allProducts = tableOrder.getItems();
+    private void deleteButtonClicked(){
+        ObservableList<ItemEntity> allProducts = tableOrder.getItems();
         productSelected = tableOrder.getSelectionModel().getSelectedItems();
         productSelected.forEach(allProducts::remove);
         String price = String.format("%.2f", sumPrice());
         String calories = Integer.toString(sumCalories());
+        resetSum(price, calories);
+    }
+
+    private void resetSum(String price, String calories){
         priceSum.setText(price);
         caloriesSum.setText(calories);
-
     }
 
 }

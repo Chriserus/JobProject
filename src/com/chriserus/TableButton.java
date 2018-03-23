@@ -1,18 +1,14 @@
 package com.chriserus;
 
-import javafx.application.*;
-import javafx.stage.*;
-import javafx.scene.*;
-import javafx.scene.layout.*;
-import javafx.scene.control.*;
-import javafx.geometry.*;
-import javafx.scene.image.*;
+import javafx.scene.control.Button;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 
-public class TableButton extends Button {
-    public TableButton() {
+ class TableButton extends Button {
+     TableButton() {
         super();
         FileInputStream inputStream = null;
         try {
@@ -25,7 +21,8 @@ public class TableButton extends Button {
         this.setGraphic(new ImageView(tableIcon));
 
         this.setOnAction(e -> {
-            CreatingBox.displayCreator();
+            CreatingBox box = new CreatingBox();
+            box.display();
         });
     }
 }

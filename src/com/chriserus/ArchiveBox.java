@@ -1,18 +1,14 @@
 package com.chriserus;
 
-import javafx.application.*;
-import javafx.stage.*;
-import javafx.scene.*;
-import javafx.scene.layout.*;
-import javafx.scene.control.*;
-import javafx.geometry.*;
-import javafx.scene.image.*;
+import javafx.geometry.Insets;
+import javafx.scene.Scene;
+import javafx.scene.layout.GridPane;
+import javafx.stage.Modality;
+import javafx.stage.Stage;
 
 public class ArchiveBox {
-    public static void displayArchive(){
+    public void displayArchive(){
         Stage window = new Stage();
-
-
 
         window.initModality(Modality.APPLICATION_MODAL);
         window.setTitle("Archive of the restaurant");

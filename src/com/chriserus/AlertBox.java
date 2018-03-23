@@ -1,22 +1,16 @@
 package com.chriserus;
 
-import javafx.application.*;
-import javafx.stage.*;
-import javafx.scene.*;
-import javafx.scene.layout.*;
-import javafx.scene.control.*;
-import javafx.geometry.*;
-import javafx.scene.image.*;
-import org.hibernate.Session;
-import org.hibernate.SessionFactory;
-import org.hibernate.cfg.Configuration;
-
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
+import javafx.geometry.Pos;
+import javafx.scene.Scene;
+import javafx.scene.control.Button;
+import javafx.scene.control.Label;
+import javafx.scene.layout.VBox;
+import javafx.stage.Modality;
+import javafx.stage.Stage;
 
 public class AlertBox {
 
-    public static void display(String message){
+    public void display(String message){
         Stage window = new Stage();
 
         window.initModality(Modality.APPLICATION_MODAL);
