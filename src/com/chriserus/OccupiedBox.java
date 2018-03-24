@@ -24,7 +24,6 @@ public class OccupiedBox {
         Scene scene = new Scene(grid, 800, 900);
         window.setScene(scene);
         window.showAndWait();
-        boolean occupied = false;
-        return occupied;
+        return false;
     }
 }

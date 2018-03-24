@@ -17,9 +17,9 @@ public class CreatingBox{
     private TextField nameInput, surnameInput;
     private Stage window;
     private CheckBox isVegBox;
-    private boolean occupied;
+   // private boolean occupied;
 
-    public boolean display(){
+    public void /*boolean*/ display(){
         window = new Stage();
 
         window.initModality(Modality.APPLICATION_MODAL);
@@ -75,7 +75,7 @@ public class CreatingBox{
         Scene scene = new Scene(grid, 300, 200);
         window.setScene(scene);
         window.showAndWait();
-        return occupied;
+      //  return occupied;
     }
 
     //Taking input via submitButton and creating new Customer object
@@ -92,8 +92,8 @@ public class CreatingBox{
             session.save(tempClient);
             session.getTransaction().commit();
 
-            OrderBox box = new OrderBox();
-            occupied = box.display(tempClient);
+            OrderBox orderBox = new OrderBox();
+            /*occupied = */orderBox.display(tempClient);
         }else{
             AlertBox boxA = new AlertBox();
             boxA.display("This is not a valid name/surname!");

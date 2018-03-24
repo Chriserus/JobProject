@@ -15,10 +15,17 @@ import java.util.*;
 
 public class TableBox {
 
-    private boolean occupied;
+    //private boolean occupied;
     private List<Button> tableButtons;
+    private boolean test;
     private Stage window;
 
+    public void setTest(boolean b){
+        test = b;
+    }
+    public boolean getTest(){
+        return test;
+    }
     TableBox(){
         tableButtons = new ArrayList<>();
         window = new Stage();
@@ -38,7 +45,7 @@ public class TableBox {
             for (int i = 0; i < 2; i++) {
                 for (int j = 0; j < 2; j++) {
                     Button button = new Button();
-                    button = checkSeat(button);
+                    button = checkSeat(button/*, occupied*/);
                     GridPane.setConstraints(button, i, j);
                     tableButtons.add(button);
                 }
@@ -51,12 +58,12 @@ public class TableBox {
             grid.getChildren().removeAll();
             for (int i = 0; i < 2; i++) {
                 for (int j = 0; j < 2; j++) {
-                    Button button = tableButtons.get(count);
-                    button = checkSeat(button);
+                    Button button = tableButtons.get(0);
+                    button = checkSeat(button/*, occupied*/);
                     GridPane.setConstraints(button, i, j);
                     System.out.println("Coordinates: " + i + " " + j);
                     System.out.println("Removing button nr: " +count);
-                    tableButtons.remove(count);
+                    tableButtons.remove(0);
                     tableButtons.add(button);
                     count++;
                 }
@@ -73,28 +80,29 @@ public class TableBox {
         window.setOnCloseRequest(e -> grid.getChildren().removeAll());
     }
 
-    private Button checkSeat(Button button) {
+    private Button checkSeat(Button button/*, boolean occupied*/) {
         if(button == null){
             button = new Button();
         }
-        if(occupied){
-            FileInputStream inputStream = null;
-            try {
-                inputStream = new FileInputStream("resources/icons/person");
-            } catch (FileNotFoundException e) {
-                e.printStackTrace();
-            }
-
-            Image personIcon = new Image(inputStream);
-            button.setGraphic(new ImageView(personIcon));
-
-            button.setOnAction(e -> {
-                OccupiedBox box = new OccupiedBox();
-                this.occupied = box.display();
-            });
-            occupied = false;
-            return button;
-        }else {
+//        //if(occupied){
+//            //this.occupied = false;
+//            FileInputStream inputStream = null;
+//            try {
+//                inputStream = new FileInputStream("resources/icons/person");
+//            } catch (FileNotFoundException e) {
+//                e.printStackTrace();
+//            }
+//
+//            Image personIcon = new Image(inputStream);
+//            button.setGraphic(new ImageView(personIcon));
+//
+//            button.setOnAction(e -> {
+//                OccupiedBox box = new OccupiedBox();
+//                this.occupied = box.display();
+//            });
+//            occupied = false;
+//            return button;
+        //}else {
             FileInputStream inputStream = null;
             try {
                 inputStream = new FileInputStream("resources/icons/addNew");
@@ -106,11 +114,18 @@ public class TableBox {
             button.setGraphic(new ImageView(tableIcon));
 
             button.setOnAction(e -> {
-                CreatingBox box = new CreatingBox();
-                this.occupied = box.display();
+                CreatingBox creatingBox = new CreatingBox();
+                /*this.occupied =*/ creatingBox.display();
             });
 
             return button;
+        //}
+    }
+
+    class SeatButton extends Button{
+        SeatButton(){
+            super();
+
         }
     }
 }

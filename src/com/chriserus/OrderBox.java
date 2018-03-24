@@ -3,6 +3,7 @@ package com.chriserus;
 import com.chriserus.hibernate.ClientEntity;
 import com.chriserus.hibernate.ItemEntity;
 import com.chriserus.hibernate.PurchaseEntity;
+import com.chriserus.*;
 import com.sun.security.ntlm.Client;
 import javafx.collections.ObservableList;
 import javafx.geometry.Insets;
@@ -17,6 +18,7 @@ import javafx.stage.Modality;
 import javafx.stage.Stage;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
+import sun.applet.Main;
 
 public class OrderBox extends MenuBox{
     private TableView<ItemEntity> table, tableOrder;
@@ -24,9 +26,9 @@ public class OrderBox extends MenuBox{
     private ObservableList<ItemEntity> productSelected, wholeOrder;
     private ClientEntity currentClient;
     private Stage window;
-    private boolean occupied;
+    //private boolean occupied;
 
-    public boolean display(ClientEntity client){
+    public /*boolean*/ void display(ClientEntity client){
         currentClient = client;
 
         window = new Stage();
@@ -108,8 +110,14 @@ public class OrderBox extends MenuBox{
 
         addButton.setOnAction(e->addButtonClicked());
         removeButton.setOnAction(e->deleteButtonClicked());
-        finalizeButton.setOnAction(e ->finalizeButtonClicked());
-        window.setOnCloseRequest(e ->deleteClient());
+        finalizeButton.setOnAction(e ->{
+            finalizeButtonClicked();
+
+        });
+        window.setOnCloseRequest(e -> {
+            e.consume();
+            deleteClient();
+        });
 
 
         //Layout
@@ -157,7 +165,8 @@ public class OrderBox extends MenuBox{
 
         window.setScene(scene);
         window.show();
-        return occupied;
+      //  return occupied;
+
     }
 
     private double sumPrice(){
@@ -186,7 +195,7 @@ public class OrderBox extends MenuBox{
         session.delete(currentClient);
         session.getTransaction().commit();
         window.close();
-        occupied = false;
+     //   occupied = false;
     }
 
     //Update client info (total calories and order price) and makes Purchase entity, updates db
@@ -207,7 +216,7 @@ public class OrderBox extends MenuBox{
         }
         session.getTransaction().commit();
         window.close();
-        occupied = true;
+      //  occupied = true;
     }
 
     private void addButtonClicked(){
