@@ -84,11 +84,7 @@ public class CreatingBox {
             SessionFactory sessionFactory = HibernateFactory.getSessionFactory();
             Session session = sessionFactory.getCurrentSession();
             //Creating a customer
-            ClientEntity tempClient = new ClientEntity();
-            tempClient.setName(nameInput.getText());
-            tempClient.setSurname(surnameInput.getText());
-            tempClient.setVegetarian(isVegBox.isSelected());
-
+            ClientEntity tempClient = new ClientEntity(nameInput.getText(), surnameInput.getText(), isVegBox.isSelected());
             //Sending a customer
             session.beginTransaction();
             session.save(tempClient);

@@ -2,6 +2,8 @@ package com.chriserus;
 
 import com.chriserus.hibernate.ClientEntity;
 import com.chriserus.hibernate.ItemEntity;
+import com.chriserus.hibernate.PurchaseEntity;
+import com.sun.security.ntlm.Client;
 import javafx.collections.ObservableList;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
@@ -13,17 +15,22 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
+import org.hibernate.Session;
+import org.hibernate.SessionFactory;
 
 
 public class OrderBox extends MenuBox{
     private  TableView<ItemEntity> table, tableOrder;
     private  TextField caloriesSum, priceSum;
     private  ObservableList<ItemEntity> productSelected, wholeOrder;
-
+    private ClientEntity currentClient;
+    private Stage window;
 
     public void display(ClientEntity client){
+        currentClient = client;
 
-        Stage window = new Stage();
+        window = new Stage();
+        window.setOnCloseRequest(e -> deleteClient());
         //Adding table
          table = new TableView<>();
          tableOrder = new TableView<>();
@@ -151,6 +158,18 @@ public class OrderBox extends MenuBox{
         window.show();
     }
 
+    //Deletes the client and exits
+    private void deleteClient(){
+        //getting the factory
+        SessionFactory sessionFactory = HibernateFactory.getSessionFactory();
+        Session session = sessionFactory.getCurrentSession();
+        //Deleting a customer
+        session.beginTransaction();
+        session.delete(currentClient);
+        session.getTransaction().commit();
+        window.close();
+    }
+
     private double sumPrice(){
         double sum = 0;
         wholeOrder = tableOrder.getItems();
@@ -170,8 +189,24 @@ public class OrderBox extends MenuBox{
 
 
     private void finalizeButtonClicked() {
+        //getting the factory
+        SessionFactory sessionFactory = HibernateFactory.getSessionFactory();
+        Session session = sessionFactory.getCurrentSession();
 
+        session.beginTransaction();
+        //Updating the customer
+        ClientEntity client = session.get(ClientEntity.class, currentClient.getId());
+        client.setCaloriesTotal(sumCalories());
+        client.setOrderTotal(sumPrice());
 
+        //Creating and sending an order
+
+        for(ItemEntity item : tableOrder.getItems()){
+            PurchaseEntity purchase = new PurchaseEntity(currentClient, item);
+            session.save(purchase);
+        }
+        session.getTransaction().commit();
+        window.close();
     }
 
     private void addButtonClicked(){

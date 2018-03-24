@@ -7,6 +7,7 @@
     <class name="com.chriserus.hibernate.ClientEntity" table="Client" schema="restaurant">
         <id name="id">
             <column name="id" sql-type="int(10) unsigned"/>
+            <generator class="identity" />
         </id>
         <property name="name">
             <column name="name" sql-type="varchar(150)" length="150"/>

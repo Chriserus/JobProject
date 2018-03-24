@@ -10,8 +10,14 @@ public class PurchaseEntity {
     private ClientEntity clientByClientid;
     private ItemEntity itemByMenuid;
 
+    public PurchaseEntity(ClientEntity client, ItemEntity item) {
+        clientByClientid = client;
+        itemByMenuid = item;
+    }
+
     @Id
     @Column(name = "id", nullable = false)
+    @GeneratedValue(strategy = GenerationType.AUTO)
     public int getId() {
         return id;
     }

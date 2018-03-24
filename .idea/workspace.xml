@@ -3,25 +3,14 @@
   <component name="ChangeListManager">
     <list default="true" id="395a15cb-a078-4866-9716-c5d18aeb12fe" name="Default" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change beforePath="$PROJECT_DIR$/out/production/JobProject/com/chriserus/ArchiveBox.class" afterPath="$PROJECT_DIR$/out/production/JobProject/com/chriserus/ArchiveBox.class" />
-      <change beforePath="$PROJECT_DIR$/out/production/JobProject/com/chriserus/CreatingBox.class" afterPath="$PROJECT_DIR$/out/production/JobProject/com/chriserus/CreatingBox.class" />
-      <change beforePath="$PROJECT_DIR$/out/production/JobProject/com/chriserus/CustomerButton.class" afterPath="$PROJECT_DIR$/out/production/JobProject/com/chriserus/CustomerButton.class" />
-      <change beforePath="$PROJECT_DIR$/out/production/JobProject/com/chriserus/HibernateFactory.class" afterPath="$PROJECT_DIR$/out/production/JobProject/com/chriserus/HibernateFactory.class" />
-      <change beforePath="$PROJECT_DIR$/out/production/JobProject/com/chriserus/MainGUI.class" afterPath="$PROJECT_DIR$/out/production/JobProject/com/chriserus/MainGUI.class" />
-      <change beforePath="$PROJECT_DIR$/out/production/JobProject/com/chriserus/MenuBox.class" afterPath="$PROJECT_DIR$/out/production/JobProject/com/chriserus/MenuBox.class" />
-      <change beforePath="$PROJECT_DIR$/out/production/JobProject/com/chriserus/OrderBox.class" afterPath="$PROJECT_DIR$/out/production/JobProject/com/chriserus/OrderBox.class" />
-      <change beforePath="$PROJECT_DIR$/out/production/JobProject/com/chriserus/TableBox.class" afterPath="$PROJECT_DIR$/out/production/JobProject/com/chriserus/TableBox.class" />
-      <change beforePath="$PROJECT_DIR$/out/production/JobProject/com/chriserus/TableButton.class" afterPath="$PROJECT_DIR$/out/production/JobProject/com/chriserus/TableButton.class" />
-      <change beforePath="$PROJECT_DIR$/src/com/chriserus/AlertBox.java" afterPath="$PROJECT_DIR$/src/com/chriserus/AlertBox.java" />
-      <change beforePath="$PROJECT_DIR$/src/com/chriserus/ArchiveBox.java" afterPath="$PROJECT_DIR$/src/com/chriserus/ArchiveBox.java" />
       <change beforePath="$PROJECT_DIR$/src/com/chriserus/CreatingBox.java" afterPath="$PROJECT_DIR$/src/com/chriserus/CreatingBox.java" />
-      <change beforePath="$PROJECT_DIR$/src/com/chriserus/CustomerButton.java" afterPath="$PROJECT_DIR$/src/com/chriserus/CustomerButton.java" />
-      <change beforePath="$PROJECT_DIR$/src/com/chriserus/HibernateFactory.java" afterPath="$PROJECT_DIR$/src/com/chriserus/HibernateFactory.java" />
-      <change beforePath="$PROJECT_DIR$/src/com/chriserus/MainGUI.java" afterPath="$PROJECT_DIR$/src/com/chriserus/MainGUI.java" />
-      <change beforePath="$PROJECT_DIR$/src/com/chriserus/MenuBox.java" afterPath="$PROJECT_DIR$/src/com/chriserus/MenuBox.java" />
       <change beforePath="$PROJECT_DIR$/src/com/chriserus/OrderBox.java" afterPath="$PROJECT_DIR$/src/com/chriserus/OrderBox.java" />
-      <change beforePath="$PROJECT_DIR$/src/com/chriserus/TableBox.java" afterPath="$PROJECT_DIR$/src/com/chriserus/TableBox.java" />
-      <change beforePath="$PROJECT_DIR$/src/com/chriserus/TableButton.java" afterPath="$PROJECT_DIR$/src/com/chriserus/TableButton.java" />
+      <change beforePath="$PROJECT_DIR$/src/com/chriserus/hibernate/ClientEntity.hbm.xml" afterPath="$PROJECT_DIR$/src/com/chriserus/hibernate/ClientEntity.hbm.xml" />
+      <change beforePath="$PROJECT_DIR$/src/com/chriserus/hibernate/ClientEntity.java" afterPath="$PROJECT_DIR$/src/com/chriserus/hibernate/ClientEntity.java" />
+      <change beforePath="$PROJECT_DIR$/src/com/chriserus/hibernate/ItemEntity.hbm.xml" afterPath="$PROJECT_DIR$/src/com/chriserus/hibernate/ItemEntity.hbm.xml" />
+      <change beforePath="$PROJECT_DIR$/src/com/chriserus/hibernate/ItemEntity.java" afterPath="$PROJECT_DIR$/src/com/chriserus/hibernate/ItemEntity.java" />
+      <change beforePath="$PROJECT_DIR$/src/com/chriserus/hibernate/PurchaseEntity.hbm.xml" afterPath="$PROJECT_DIR$/src/com/chriserus/hibernate/PurchaseEntity.hbm.xml" />
+      <change beforePath="$PROJECT_DIR$/src/com/chriserus/hibernate/PurchaseEntity.java" afterPath="$PROJECT_DIR$/src/com/chriserus/hibernate/PurchaseEntity.java" />
     </list>
     <ignored path="$PROJECT_DIR$/out/" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -45,21 +34,79 @@
         <item name="Database" type="3277223f:DatabaseStructure$DbRootGroup" />
         <item name="restaurant@localhost" type="feb32156:DbDataSourceImpl" />
       </path>
+      <path>
+        <item name="Database" type="3277223f:DatabaseStructure$DbRootGroup" />
+        <item name="restaurant@localhost" type="feb32156:DbDataSourceImpl" />
+        <item name="schemas" type="d4e8921:DatabaseStructure$FamilyGroup" />
+      </path>
+      <path>
+        <item name="Database" type="3277223f:DatabaseStructure$DbRootGroup" />
+        <item name="restaurant@localhost" type="feb32156:DbDataSourceImpl" />
+        <item name="schemas" type="d4e8921:DatabaseStructure$FamilyGroup" />
+        <item name="restaurant: schema" type="c314c289:MysqlImplModel$Schema" />
+      </path>
+      <path>
+        <item name="Database" type="3277223f:DatabaseStructure$DbRootGroup" />
+        <item name="restaurant@localhost" type="feb32156:DbDataSourceImpl" />
+        <item name="schemas" type="d4e8921:DatabaseStructure$FamilyGroup" />
+        <item name="restaurant: schema" type="c314c289:MysqlImplModel$Schema" />
+        <item name="Client: table" type="98d5ac3d:MysqlImplModel$Table" />
+      </path>
     </expand>
     <select />
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="MainGUI.java" pinned="false" current-in-tab="true">
+      <file leaf-file-name="MainGUI.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/com/chriserus/MainGUI.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="158">
-              <caret line="17" column="5" lean-forward="true" selection-start-line="17" selection-start-column="5" selection-end-line="17" selection-end-column="5" />
+            <state relative-caret-position="590">
+              <caret line="68" column="8" lean-forward="false" selection-start-line="68" selection-start-column="8" selection-end-line="68" selection-end-column="50" />
               <folding>
                 <element signature="imports" expanded="true" />
                 <element signature="e#375#376#0" expanded="true" />
                 <element signature="e#404#405#0" expanded="true" />
               </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="CreatingBox.java" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/src/com/chriserus/CreatingBox.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="428">
+              <caret line="80" column="44" lean-forward="true" selection-start-line="80" selection-start-column="44" selection-end-line="80" selection-end-column="44" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="OrderBox.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/com/chriserus/OrderBox.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="208">
+              <caret line="198" column="47" lean-forward="true" selection-start-line="198" selection-start-column="47" selection-end-line="198" selection-end-column="47" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="ItemEntity.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/com/chriserus/hibernate/ItemEntity.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="432">
+              <caret line="25" column="42" lean-forward="true" selection-start-line="25" selection-start-column="42" selection-end-line="25" selection-end-column="42" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="PurchaseEntity.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/com/chriserus/hibernate/PurchaseEntity.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="234">
+              <caret line="14" column="28" lean-forward="false" selection-start-line="14" selection-start-column="28" selection-end-line="14" selection-end-column="28" />
+              <folding />
             </state>
           </provider>
         </entry>
@@ -88,24 +135,26 @@
     <option name="CHANGED_PATHS">
       <list>
         <option value="$PROJECT_DIR$/src/hibernate.cfg.xml.fxml" />
-        <option value="$PROJECT_DIR$/src/com/chriserus/hibernate/PurchaseEntity.java" />
         <option value="$PROJECT_DIR$/src/hibernate.cfg.xml" />
         <option value="$PROJECT_DIR$/hs_err_pid9573.log" />
-        <option value="$PROJECT_DIR$/src/com/chriserus/hibernate/ClientEntity.hbm.xml" />
-        <option value="$PROJECT_DIR$/src/com/chriserus/hibernate/ItemEntity.java" />
-        <option value="$PROJECT_DIR$/src/com/chriserus/hibernate/ClientEntity.java" />
         <option value="$PROJECT_DIR$/src/com/chriserus/ItemTable.java" />
-        <option value="$PROJECT_DIR$/src/com/chriserus/CustomerButton.java" />
         <option value="$PROJECT_DIR$/src/com/chriserus/HibernateFactory.java" />
         <option value="$PROJECT_DIR$/src/com/chriserus/Box.java" />
         <option value="$PROJECT_DIR$/src/com/chriserus/TableButton.java" />
-        <option value="$PROJECT_DIR$/src/com/chriserus/MainGUI.java" />
         <option value="$PROJECT_DIR$/src/com/chriserus/AlertBox.java" />
         <option value="$PROJECT_DIR$/src/com/chriserus/ArchiveBox.java" />
-        <option value="$PROJECT_DIR$/src/com/chriserus/CreatingBox.java" />
         <option value="$PROJECT_DIR$/src/com/chriserus/MenuBox.java" />
-        <option value="$PROJECT_DIR$/src/com/chriserus/OrderBox.java" />
         <option value="$PROJECT_DIR$/src/com/chriserus/TableBox.java" />
+        <option value="$PROJECT_DIR$/src/com/chriserus/MainGUI.java" />
+        <option value="$PROJECT_DIR$/src/com/chriserus/CustomerButton.java" />
+        <option value="$PROJECT_DIR$/src/com/chriserus/hibernate/ClientEntity.hbm.xml" />
+        <option value="$PROJECT_DIR$/src/com/chriserus/CreatingBox.java" />
+        <option value="$PROJECT_DIR$/src/com/chriserus/hibernate/ItemEntity.java" />
+        <option value="$PROJECT_DIR$/src/com/chriserus/hibernate/PurchaseEntity.java" />
+        <option value="$PROJECT_DIR$/src/com/chriserus/hibernate/ItemEntity.hbm.xml" />
+        <option value="$PROJECT_DIR$/src/com/chriserus/hibernate/PurchaseEntity.hbm.xml" />
+        <option value="$PROJECT_DIR$/src/com/chriserus/OrderBox.java" />
+        <option value="$PROJECT_DIR$/src/com/chriserus/hibernate/ClientEntity.java" />
       </list>
     </option>
   </component>
@@ -139,7 +188,6 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
-      <pane id="Scope" />
       <pane id="AndroidView" />
       <pane id="ProjectPane">
         <subPane>
@@ -170,8 +218,9 @@
           <select />
         </subPane>
       </pane>
-      <pane id="Scratches" />
       <pane id="PackagesPane" />
+      <pane id="Scope" />
+      <pane id="Scratches" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -343,12 +392,13 @@
       <workItem from="1521564443616" duration="2773000" />
       <workItem from="1521574966782" duration="115000" />
       <workItem from="1521838424625" duration="39000" />
-      <workItem from="1521838544751" duration="6504000" />
+      <workItem from="1521838544751" duration="6568000" />
+      <workItem from="1521888745630" duration="2707000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="43438000" />
+    <option name="totallyTimeSpent" value="46209000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="1007" y="31" width="1857" height="1092" extended-state="6" />
@@ -367,9 +417,9 @@
       <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32903227" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
       <window_info id="Capture Tool" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
-      <window_info id="Persistence" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.17689331" sideWeight="0.37526882" order="6" side_tool="true" content_ui="tabs" />
+      <window_info id="Persistence" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.17910448" sideWeight="0.38064516" order="6" side_tool="true" content_ui="tabs" />
       <window_info id="Designer" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.17689331" sideWeight="0.6247312" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.17910448" sideWeight="0.61935484" order="0" side_tool="false" content_ui="combo" />
       <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.1310116" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
@@ -603,34 +653,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/com/chriserus/hibernate/ClientEntity.hbm.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="414">
-          <caret line="32" column="68" lean-forward="false" selection-start-line="32" selection-start-column="68" selection-end-line="32" selection-end-column="68" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/com/chriserus/hibernate/ItemEntity.hbm.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/com/chriserus/hibernate/PurchaseEntity.hbm.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/com/chriserus/hibernate/ItemEntity.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="234">
-          <caret line="14" column="25" lean-forward="false" selection-start-line="14" selection-start-column="25" selection-end-line="14" selection-end-column="25" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/hibernate.cfg.xml">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="450">
@@ -639,95 +661,17 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/com/chriserus/hibernate/PurchaseEntity.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="144">
-          <caret line="9" column="42" lean-forward="false" selection-start-line="9" selection-start-column="42" selection-end-line="9" selection-end-column="42" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/com/chriserus/ItemTable.java" />
-    <entry file="uml://DATABASE/aa838544-387e-4781-8695-5c2e3a03394b.SCHEMA:restaurant">
-      <provider selected="true" editor-type-id="UmlEditorProvider">
-        <state>
-          <ID>DATABASE</ID>
-          <OriginalElement>aa838544-387e-4781-8695-5c2e3a03394b.SCHEMA:restaurant</OriginalElement>
-          <nodes>
-            <node x="" y="">aa838544-387e-4781-8695-5c2e3a03394b.TABLE:restaurant.Client</node>
-            <node x="" y="">aa838544-387e-4781-8695-5c2e3a03394b.TABLE:restaurant.Item</node>
-            <node x="" y="">aa838544-387e-4781-8695-5c2e3a03394b.TABLE:restaurant.Purchase</node>
-          </nodes>
-          <notes />
-          <edges />
-          <settings layout="Hierarchic Group" zoom="1.0" x="273.0" y="201.0" />
-          <SelectedNodes />
-          <Categories>
-            <Category>Columns</Category>
-            <Category>Key columns</Category>
-          </Categories>
-          <SCOPE>All</SCOPE>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/com/chriserus/Box.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="54">
-          <caret line="3" column="19" lean-forward="true" selection-start-line="3" selection-start-column="19" selection-end-line="3" selection-end-column="19" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/com/chriserus/hibernate/ClientEntity.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="288">
-          <caret line="18" column="0" lean-forward="false" selection-start-line="18" selection-start-column="0" selection-end-line="18" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/com/chriserus/AlertBox.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="234">
-          <caret line="13" column="33" lean-forward="false" selection-start-line="13" selection-start-column="33" selection-end-line="13" selection-end-column="33" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/com/chriserus/ArchiveBox.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="126">
-          <caret line="11" column="8" lean-forward="false" selection-start-line="11" selection-start-column="8" selection-end-line="11" selection-end-column="8" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/com/chriserus/CustomerButton.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="324">
-          <caret line="23" column="11" lean-forward="true" selection-start-line="23" selection-start-column="11" selection-end-line="23" selection-end-column="11" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
+    <entry file="file://$PROJECT_DIR$/src/com/chriserus/Box.java" />
     <entry file="file://$PROJECT_DIR$/src/com/chriserus/HibernateFactory.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="36">
           <caret line="2" column="7" lean-forward="true" selection-start-line="2" selection-start-column="7" selection-end-line="2" selection-end-column="7" />
           <folding>
             <element signature="imports" expanded="true" />
-            <element signature="e#628#629#0" expanded="true" />
-            <element signature="e#678#679#0" expanded="true" />
+            <element signature="e#628#629#0" expanded="false" />
+            <element signature="e#678#679#0" expanded="false" />
           </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/com/chriserus/CreatingBox.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1674">
-          <caret line="104" column="33" lean-forward="false" selection-start-line="104" selection-start-column="33" selection-end-line="104" selection-end-column="33" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -735,14 +679,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="1584">
           <caret line="102" column="4" lean-forward="false" selection-start-line="102" selection-start-column="4" selection-end-line="102" selection-end-column="4" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/com/chriserus/OrderBox.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="162">
-          <caret line="21" column="4" lean-forward="false" selection-start-line="21" selection-start-column="4" selection-end-line="21" selection-end-column="4" />
           <folding />
         </state>
       </provider>
@@ -761,19 +697,142 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="378">
           <caret line="27" column="28" lean-forward="false" selection-start-line="27" selection-start-column="28" selection-end-line="27" selection-end-column="28" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/com/chriserus/ArchiveBox.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="126">
+          <caret line="11" column="0" lean-forward="true" selection-start-line="11" selection-start-column="0" selection-end-line="11" selection-end-column="0" />
           <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/com/chriserus/AlertBox.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="234">
+          <caret line="13" column="33" lean-forward="false" selection-start-line="13" selection-start-column="33" selection-end-line="13" selection-end-column="33" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/com/chriserus/CustomerButton.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="72">
+          <caret line="9" column="13" lean-forward="false" selection-start-line="9" selection-start-column="13" selection-end-line="9" selection-end-column="13" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="uml://DATABASE/aa838544-387e-4781-8695-5c2e3a03394b.SCHEMA:restaurant">
+      <provider selected="true" editor-type-id="UmlEditorProvider">
+        <state>
+          <ID>DATABASE</ID>
+          <OriginalElement>aa838544-387e-4781-8695-5c2e3a03394b.SCHEMA:restaurant</OriginalElement>
+          <nodes>
+            <node x="283.0" y="0.0">aa838544-387e-4781-8695-5c2e3a03394b.TABLE:restaurant.Client</node>
+            <node x="0.0" y="48.0">aa838544-387e-4781-8695-5c2e3a03394b.TABLE:restaurant.Item</node>
+            <node x="161.5" y="298.0">aa838544-387e-4781-8695-5c2e3a03394b.TABLE:restaurant.Purchase</node>
+          </nodes>
+          <notes />
+          <edges>
+            <edge source="aa838544-387e-4781-8695-5c2e3a03394b.TABLE:restaurant.Purchase" target="aa838544-387e-4781-8695-5c2e3a03394b.TABLE:restaurant.Client">
+              <point x="55.75" y="-52.0" />
+              <point x="328.75" y="273.0" />
+              <point x="414.5" y="273.0" />
+              <point x="0.0" y="124.0" />
+            </edge>
+            <edge source="aa838544-387e-4781-8695-5c2e3a03394b.TABLE:restaurant.Purchase" target="aa838544-387e-4781-8695-5c2e3a03394b.TABLE:restaurant.Item">
+              <point x="-55.75" y="-52.0" />
+              <point x="217.25" y="273.0" />
+              <point x="131.5" y="273.0" />
+              <point x="0.0" y="76.0" />
+            </edge>
+          </edges>
+          <settings layout="Hierarchic Group" zoom="1.0" x="-111.0" y="156.0" />
+          <SelectedNodes />
+          <Categories>
+            <Category>Key columns</Category>
+            <Category>Columns</Category>
+          </Categories>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/com/chriserus/MainGUI.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="158">
-          <caret line="17" column="5" lean-forward="true" selection-start-line="17" selection-start-column="5" selection-end-line="17" selection-end-column="5" />
+        <state relative-caret-position="590">
+          <caret line="68" column="8" lean-forward="false" selection-start-line="68" selection-start-column="8" selection-end-line="68" selection-end-column="50" />
           <folding>
             <element signature="imports" expanded="true" />
             <element signature="e#375#376#0" expanded="true" />
             <element signature="e#404#405#0" expanded="true" />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/com/chriserus/hibernate/ClientEntity.hbm.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="162">
+          <caret line="9" column="12" lean-forward="true" selection-start-line="9" selection-start-column="12" selection-end-line="9" selection-end-column="42" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/com/chriserus/hibernate/ItemEntity.hbm.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="162">
+          <caret line="9" column="42" lean-forward="false" selection-start-line="9" selection-start-column="42" selection-end-line="9" selection-end-column="42" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/com/chriserus/hibernate/PurchaseEntity.hbm.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="162">
+          <caret line="9" column="42" lean-forward="false" selection-start-line="9" selection-start-column="42" selection-end-line="9" selection-end-column="42" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/com/chriserus/hibernate/ItemEntity.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="432">
+          <caret line="25" column="42" lean-forward="true" selection-start-line="25" selection-start-column="42" selection-end-line="25" selection-end-column="42" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/com/chriserus/hibernate/ClientEntity.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1368">
+          <caret line="112" column="27" lean-forward="false" selection-start-line="112" selection-start-column="27" selection-end-line="112" selection-end-column="27" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/com/chriserus/hibernate/PurchaseEntity.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="234">
+          <caret line="14" column="28" lean-forward="false" selection-start-line="14" selection-start-column="28" selection-end-line="14" selection-end-column="28" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/com/chriserus/OrderBox.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="208">
+          <caret line="198" column="47" lean-forward="true" selection-start-line="198" selection-start-column="47" selection-end-line="198" selection-end-column="47" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/com/chriserus/CreatingBox.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="428">
+          <caret line="80" column="44" lean-forward="true" selection-start-line="80" selection-start-column="44" selection-end-line="80" selection-end-column="44" />
+          <folding />
         </state>
       </provider>
     </entry>

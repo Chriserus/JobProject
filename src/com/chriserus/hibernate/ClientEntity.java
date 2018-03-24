@@ -7,106 +7,116 @@ import java.util.Objects;
 @Entity
 @Table(name = "Client", schema = "restaurant")
 public class ClientEntity {
-    private int id;
-    private String name;
-    private String surname;
-    private boolean vegetarian;
-    private Integer tableNo;
-    private Timestamp finish;
-    private Integer orderNo;
-    private Double orderTotal;
-    private Integer caloriesTotal;
-
-
 
     @Id
     @Column(name = "id", nullable = false)
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
-    }
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private int id;
 
     @Basic
     @Column(name = "name", nullable = false, length = 150)
+    private String name;
+
+    @Basic
+    @Column(name = "surname", nullable = false, length = 150)
+    private String surname;
+
+    @Basic
+    @Column(name = "vegetarian", nullable = false)
+    private boolean vegetarian;
+
+    @Basic
+    @Column(name = "tableNo", columnDefinition = "int default 0")
+    private Integer tableNo;
+
+    @Basic
+    @Column(name = "finish", nullable = true)
+    private Timestamp finish;
+
+    @Basic
+    @Column(name = "orderNo", nullable = true)
+    private Integer orderNo;
+
+    @Basic
+    @Column(name = "orderTotal", nullable = true, precision = 0)
+    private Double orderTotal;
+
+    @Basic
+    @Column(name = "caloriesTotal", nullable = true)
+    private Integer caloriesTotal;
+
+
+    public int getId() {
+        return id;
+    }
+    public void setId(int id) {this.id = id;}
+
     public String getName() {
         return name;
     }
-
     public void setName(String name) {
         this.name = name;
     }
 
-    @Basic
-    @Column(name = "surname", nullable = false, length = 150)
     public String getSurname() {
         return surname;
     }
-
     public void setSurname(String surname) {
         this.surname = surname;
     }
 
-    @Basic
-    @Column(name = "vegetarian", nullable = false)
     public boolean isVegetarian() {
         return vegetarian;
     }
-
     public void setVegetarian(boolean vegetarian) {
         this.vegetarian = vegetarian;
     }
 
-    @Basic
-    @Column(name = "tableNo", columnDefinition = "int default 0")
     public Integer getTableNo() {
         return tableNo;
     }
-
     public void setTableNo(Integer tableNo) {
         this.tableNo = tableNo;
     }
 
-    @Basic
-    @Column(name = "finish", nullable = true)
     public Timestamp getFinish() {
         return finish;
     }
-
     public void setFinish(Timestamp finish) {
         this.finish = finish;
     }
 
-    @Basic
-    @Column(name = "orderNo", nullable = true)
     public Integer getOrderNo() {
         return orderNo;
     }
-
     public void setOrderNo(Integer orderNo) {
         this.orderNo = orderNo;
     }
 
-    @Basic
-    @Column(name = "orderTotal", nullable = true, precision = 0)
     public Double getOrderTotal() {
         return orderTotal;
     }
-
     public void setOrderTotal(Double orderTotal) {
         this.orderTotal = orderTotal;
     }
 
-    @Basic
-    @Column(name = "caloriesTotal", nullable = true)
     public Integer getCaloriesTotal() {
         return caloriesTotal;
     }
-
     public void setCaloriesTotal(Integer caloriesTotal) {
         this.caloriesTotal = caloriesTotal;
+    }
+
+    //ClientEntity constructor
+
+
+    public ClientEntity() {
+    }
+
+    public ClientEntity(String name, String surname, boolean vegetarian) {
+        this.name = name;
+        this.surname = surname;
+        this.vegetarian = vegetarian;
     }
 
     @Override
