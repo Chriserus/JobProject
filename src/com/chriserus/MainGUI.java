@@ -5,13 +5,18 @@ import javafx.application.Platform;
 import javafx.geometry.Insets;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.GridPane;
 import javafx.stage.Stage;
 
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.util.ArrayList;
 
 public class MainGUI extends Application {
-
+    private ArrayList<Button> customerButtons = new ArrayList<>();
+    private TableBox box;
 
     public static void main(String[] args) {
          launch(args);
@@ -19,7 +24,6 @@ public class MainGUI extends Application {
 
     @Override
     public void start(Stage window){
-        ArrayList<CustomerButton> customerButtons = new ArrayList<>();
 
         //setting whole dashboard
         window.setTitle("Restaurant manager");
@@ -31,13 +35,19 @@ public class MainGUI extends Application {
 
 
         //creating and placing all the buttons
-        for(int i = 0; i<2; i++){
-            for(int j = 0; j<3; j++){
-                CustomerButton button = new CustomerButton();
-                GridPane.setConstraints(button, i, j);
-                customerButtons.add(button);
+        if(customerButtons.isEmpty()){
+            System.out.println("Creating new buttons...");
+            for(int i = 0; i<2; i++){
+                for(int j = 0; j<3; j++){
+                    Button button = createTableButton();
+                    GridPane.setConstraints(button, i, j);
+                    customerButtons.add(button);
+                }
             }
+        }else{
+            System.out.println("Buttons exist");
         }
+
 
         Button menu = new Button("MENU");
         Button save = new Button("SAVE");
@@ -58,7 +68,7 @@ public class MainGUI extends Application {
 
         archive.setOnAction(e -> {
             ArchiveBox box = new ArchiveBox();
-            box.displayArchive();
+            box.display();
         });
 
         //adding buttons to the grid
@@ -74,5 +84,25 @@ public class MainGUI extends Application {
     private void appClose(){
         Platform.exit();
         HibernateFactory.close();
+    }
+    private Button createTableButton(){
+
+            Button button = new Button("Add a new customer");
+            FileInputStream inputStream = null;
+            try {
+                inputStream = new FileInputStream("resources/icons/table");
+            } catch (FileNotFoundException e) {
+                e.printStackTrace();
+            }
+            Image tableIcon = new Image(inputStream);
+            button.setGraphic(new ImageView(tableIcon));
+            button.setOnAction(e -> {
+                if(box == null){
+                    box = new TableBox();
+                }
+                box.display();
+            });
+
+        return button;
     }
 }

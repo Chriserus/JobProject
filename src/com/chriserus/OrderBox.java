@@ -18,19 +18,19 @@ import javafx.stage.Stage;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 
-
 public class OrderBox extends MenuBox{
-    private  TableView<ItemEntity> table, tableOrder;
-    private  TextField caloriesSum, priceSum;
-    private  ObservableList<ItemEntity> productSelected, wholeOrder;
+    private TableView<ItemEntity> table, tableOrder;
+    private TextField caloriesSum, priceSum;
+    private ObservableList<ItemEntity> productSelected, wholeOrder;
     private ClientEntity currentClient;
     private Stage window;
+    private boolean occupied;
 
-    public void display(ClientEntity client){
+    public boolean display(ClientEntity client){
         currentClient = client;
 
         window = new Stage();
-        window.setOnCloseRequest(e -> deleteClient());
+
         //Adding table
          table = new TableView<>();
          tableOrder = new TableView<>();
@@ -108,7 +108,8 @@ public class OrderBox extends MenuBox{
 
         addButton.setOnAction(e->addButtonClicked());
         removeButton.setOnAction(e->deleteButtonClicked());
-        finalizeButton.setOnAction(e -> finalizeButtonClicked());
+        finalizeButton.setOnAction(e ->finalizeButtonClicked());
+        window.setOnCloseRequest(e ->deleteClient());
 
 
         //Layout
@@ -156,18 +157,7 @@ public class OrderBox extends MenuBox{
 
         window.setScene(scene);
         window.show();
-    }
-
-    //Deletes the client and exits
-    private void deleteClient(){
-        //getting the factory
-        SessionFactory sessionFactory = HibernateFactory.getSessionFactory();
-        Session session = sessionFactory.getCurrentSession();
-        //Deleting a customer
-        session.beginTransaction();
-        session.delete(currentClient);
-        session.getTransaction().commit();
-        window.close();
+        return occupied;
     }
 
     private double sumPrice(){
@@ -186,13 +176,24 @@ public class OrderBox extends MenuBox{
         return sum;
     }
 
+    //Deletes the client and exits
+    private void deleteClient(){
+        //getting the factory
+        SessionFactory sessionFactory = HibernateFactory.getSessionFactory();
+        Session session = sessionFactory.getCurrentSession();
+        //Deleting a customer
+        session.beginTransaction();
+        session.delete(currentClient);
+        session.getTransaction().commit();
+        window.close();
+        occupied = false;
+    }
 
-
+    //Update client info (total calories and order price) and makes Purchase entity, updates db
     private void finalizeButtonClicked() {
         //getting the factory
         SessionFactory sessionFactory = HibernateFactory.getSessionFactory();
         Session session = sessionFactory.getCurrentSession();
-
         session.beginTransaction();
         //Updating the customer
         ClientEntity client = session.get(ClientEntity.class, currentClient.getId());
@@ -200,13 +201,13 @@ public class OrderBox extends MenuBox{
         client.setOrderTotal(sumPrice());
 
         //Creating and sending an order
-
         for(ItemEntity item : tableOrder.getItems()){
             PurchaseEntity purchase = new PurchaseEntity(currentClient, item);
             session.save(purchase);
         }
         session.getTransaction().commit();
         window.close();
+        occupied = true;
     }
 
     private void addButtonClicked(){

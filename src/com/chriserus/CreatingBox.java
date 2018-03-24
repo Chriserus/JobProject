@@ -13,12 +13,13 @@ import javafx.stage.Stage;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 
-public class CreatingBox {
+public class CreatingBox{
     private TextField nameInput, surnameInput;
     private Stage window;
     private CheckBox isVegBox;
+    private boolean occupied;
 
-    public void display(){
+    public boolean display(){
         window = new Stage();
 
         window.initModality(Modality.APPLICATION_MODAL);
@@ -74,6 +75,7 @@ public class CreatingBox {
         Scene scene = new Scene(grid, 300, 200);
         window.setScene(scene);
         window.showAndWait();
+        return occupied;
     }
 
     //Taking input via submitButton and creating new Customer object
@@ -91,10 +93,10 @@ public class CreatingBox {
             session.getTransaction().commit();
 
             OrderBox box = new OrderBox();
-            box.display(tempClient);
+            occupied = box.display(tempClient);
         }else{
-            AlertBox box = new AlertBox();
-            box.display("This is not a valid name/surname!");
+            AlertBox boxA = new AlertBox();
+            boxA.display("This is not a valid name/surname!");
         }
     }
 
