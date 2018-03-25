@@ -22,11 +22,6 @@
         <mapping class="com.chriserus.hibernate.PurchaseEntity"/>
 
 
-        <!-- Assume test is the database name -->
-
-
-        <!-- List of XML mapping files -->
-
 
     </session-factory>
 </hibernate-configuration>

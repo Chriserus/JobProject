@@ -20,6 +20,8 @@ import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import sun.applet.Main;
 
+import java.util.List;
+
 public class OrderBox extends MenuBox{
     private TableView<ItemEntity> table, tableOrder;
     private TextField caloriesSum, priceSum;
@@ -27,6 +29,7 @@ public class OrderBox extends MenuBox{
     private ClientEntity currentClient;
     private Stage window;
     private TableBox tableBox;
+    private List<TableBox.SeatButton> tableButtons;
     //private boolean occupied;
 
     OrderBox(TableBox a){
@@ -221,7 +224,8 @@ public class OrderBox extends MenuBox{
         session.getTransaction().commit();
         window.close();
         //this creates new "occupied" button and adds it to tableBox
-        tableBox.createNewButton(true);
+        tableButtons = tableBox.getTableButtons();
+        tableBox.createNewButton(true, tableButtons);
         tableBox.display();
     }
 
