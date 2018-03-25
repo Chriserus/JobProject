@@ -3,8 +3,6 @@ package com.chriserus;
 import com.chriserus.hibernate.ClientEntity;
 import com.chriserus.hibernate.ItemEntity;
 import com.chriserus.hibernate.PurchaseEntity;
-import com.chriserus.*;
-import com.sun.security.ntlm.Client;
 import javafx.collections.ObservableList;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
@@ -18,7 +16,6 @@ import javafx.stage.Modality;
 import javafx.stage.Stage;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
-import sun.applet.Main;
 
 import java.util.List;
 
@@ -30,13 +27,16 @@ public class OrderBox extends MenuBox{
     private Stage window;
     private TableBox tableBox;
     private List<TableBox.SeatButton> tableButtons;
+    private int number;
     //private boolean occupied;
 
-    OrderBox(TableBox a){
-        tableBox = a;
+    OrderBox(TableBox tableBox, int number){
+        this.tableBox = tableBox;
+        this.tableButtons = tableBox.getTableButtons();
+        this.number = number;
     }
 
-    public /*boolean*/ void display(ClientEntity client) {
+    public void display(ClientEntity client) {
         currentClient = client;
 
         window = new Stage();
@@ -224,9 +224,8 @@ public class OrderBox extends MenuBox{
         session.getTransaction().commit();
         window.close();
         //this creates new "occupied" button and adds it to tableBox
-        tableButtons = tableBox.getTableButtons();
-        tableBox.createNewButton(true, tableButtons);
-        tableBox.display();
+        tableButtons.get(number).setOccupied(true);
+        tableButtons.get(number).updateButton();
     }
 
     private void addButtonClicked(){

@@ -35,12 +35,14 @@ public class DashBoard {
 
         //creating and placing all the buttons
         if (customerButtons.isEmpty()) {
+            int count;
             System.out.println("Creating new buttons...");
             for (int i = 0; i < 2; i++) {
                 for (int j = 0; j < 3; j++) {
                     CustomerButton button = new CustomerButton();
                     GridPane.setConstraints(button, i, j);
                     customerButtons.add(button);
+                    
                 }
             }
         } else {
@@ -99,10 +101,13 @@ public class DashBoard {
             Image tableIcon = new Image(inputStream);
             this.setGraphic(new ImageView(tableIcon));
             this.setOnAction(e -> {
-                if (tableBox == null) {
+                //shows the tableBox if present, creates new if not
+                if(tableBox==null){
                     tableBox = new TableBox();
+                }else{
+                    tableBox.getWindow().showAndWait();
                 }
-                tableBox.display();
+
             });
         }
 

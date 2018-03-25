@@ -18,9 +18,11 @@ public class CreatingBox{
     private Stage window;
     private CheckBox isVegBox;
     private TableBox tableBox;
+    private int number;
 
-    CreatingBox(TableBox a){
-        tableBox = a;
+    CreatingBox(TableBox tableBox, int number){
+        this.tableBox = tableBox;
+        this.number = number;
     }
 
     public void display(){
@@ -96,7 +98,7 @@ public class CreatingBox{
             session.save(tempClient);
             session.getTransaction().commit();
 
-            OrderBox orderBox = new OrderBox(tableBox);
+            OrderBox orderBox = new OrderBox(tableBox, number);
             orderBox.display(tempClient);
         }else{
             AlertBox boxA = new AlertBox();
