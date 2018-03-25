@@ -224,8 +224,10 @@ public class OrderBox extends MenuBox{
         session.getTransaction().commit();
         window.close();
         //this creates new "occupied" button and adds it to tableBox
-        tableButtons.get(number).setOccupied(true);
-        tableButtons.get(number).updateButton();
+        TableBox.SeatButton button = tableButtons.get(number);
+        button.setOccupied(true);
+        button.updateButton();
+        button.setClientEntity(currentClient);
     }
 
     private void addButtonClicked(){

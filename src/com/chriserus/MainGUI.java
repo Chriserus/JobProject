@@ -11,7 +11,7 @@ public class MainGUI extends Application {
 
     @Override
     public void start(Stage window) {
-        DashBoard dashBoard = new DashBoard();
-        dashBoard.displayDash(window);
+        DashBoard dashBoard = new DashBoard(window);
+        dashBoard.displayDash();
 }
 }

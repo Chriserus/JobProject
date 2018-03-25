@@ -1,5 +1,6 @@
 package com.chriserus;
 
+import com.chriserus.hibernate.ClientEntity;
 import javafx.geometry.Insets;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
@@ -21,7 +22,6 @@ public class TableBox {
     private TableBox tableBox;
     private GridPane grid;
     private Scene scene;
-    private int number;
 
     //HUGE constructor
     TableBox(){
@@ -62,10 +62,6 @@ public class TableBox {
         window.showAndWait();
     }
 
-    public void setNumber(int number) {
-        this.number = number;
-    }
-
 
     //window getter to check on dash if created earlier
     public Stage getWindow() {
@@ -82,11 +78,16 @@ public class TableBox {
         int number;
         OccupiedBox occupiedBox;
         CreatingBox creatingBox;
+        ClientEntity client;
 
         SeatButton(){
             super();
             //default after creation false, then we can change it with setter
             occupied = false;
+        }
+
+        public void setClientEntity(ClientEntity client){
+            this.client = client;
         }
 
         public void setOccupied(boolean occupied) {
@@ -118,6 +119,9 @@ public class TableBox {
                 //button action when occupied (click)
                 this.setOnAction(e -> {
                     occupiedBox.display();
+                    //display if client is in place, which client is here
+                    System.out.println("Client name: " + client.getName() + " And surname: "
+                            + client.getSurname() + " " + client.getId());
                 });
             }else {
                 //or not occupied (addNew)...
@@ -135,5 +139,5 @@ public class TableBox {
                     creatingBox.display();
                 });
             }
-            }
+        }
 }}

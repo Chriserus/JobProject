@@ -1,8 +1,6 @@
 package com.chriserus;
 
 import javafx.application.Platform;
-import javafx.beans.property.BooleanProperty;
-import javafx.beans.property.SimpleBooleanProperty;
 import javafx.geometry.Insets;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
@@ -17,13 +15,25 @@ import java.util.ArrayList;
 
 public class DashBoard {
     private ArrayList<CustomerButton> customerButtons = new ArrayList<>();
+    private Stage window;
 
-    private TableBox tableBox;
-
-    DashBoard(){
+    DashBoard(Stage window) {
+        this.window = window;
+        int count = 0;
+        System.out.println("Creating new buttons...");
+        //two loops, to make 2x3 window grid
+        for (int i = 0; i < 2; i++) {
+            for (int j = 0; j < 3; j++) {
+                CustomerButton button = new CustomerButton();
+                GridPane.setConstraints(button, i, j);
+                customerButtons.add(button);
+                button.setNumber(count);
+                count++;
+            }
+        }
     }
 
-    public void displayDash(Stage window){
+    public void displayDash() {
         //setting whole dashboard
         window.setTitle("Restaurant manager");
 
@@ -31,24 +41,6 @@ public class DashBoard {
         grid.setPadding(new Insets(10, 10, 10, 10));
         grid.setVgap(8);
         grid.setHgap(10);
-
-
-        //creating and placing all the buttons
-        if (customerButtons.isEmpty()) {
-            int count;
-            System.out.println("Creating new buttons...");
-            for (int i = 0; i < 2; i++) {
-                for (int j = 0; j < 3; j++) {
-                    CustomerButton button = new CustomerButton();
-                    GridPane.setConstraints(button, i, j);
-                    customerButtons.add(button);
-                    
-                }
-            }
-        } else {
-            System.out.println("Buttons exist");
-        }
-
 
         Button menu = new Button("MENU");
         Button save = new Button("SAVE");
@@ -87,7 +79,9 @@ public class DashBoard {
         HibernateFactory.close();
     }
 
-    class CustomerButton extends Button{
+    class CustomerButton extends Button {
+        int number;
+        TableBox tableBox;
 
         CustomerButton() {
             super();
@@ -102,17 +96,18 @@ public class DashBoard {
             this.setGraphic(new ImageView(tableIcon));
             this.setOnAction(e -> {
                 //shows the tableBox if present, creates new if not
-                if(tableBox==null){
+                if (tableBox == null) {
                     tableBox = new TableBox();
-                }else{
+                } else {
                     tableBox.getWindow().showAndWait();
                 }
 
             });
         }
 
-
-
+        void setNumber(int number) {
+            this.number = number;
+        }
     }
-    }
+}
 
