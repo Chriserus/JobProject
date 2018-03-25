@@ -16,11 +16,13 @@ import java.io.FileNotFoundException;
 import java.util.ArrayList;
 
 public class DashBoard {
-    private ArrayList<Button> customerButtons = new ArrayList<>();
-    private TableBox tableBox;
-    DashBoard(){
+    private ArrayList<CustomerButton> customerButtons = new ArrayList<>();
 
+    private TableBox tableBox;
+
+    DashBoard(){
     }
+
     public void displayDash(Stage window){
         //setting whole dashboard
         window.setTitle("Restaurant manager");

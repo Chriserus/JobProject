@@ -17,9 +17,13 @@ public class CreatingBox{
     private TextField nameInput, surnameInput;
     private Stage window;
     private CheckBox isVegBox;
-   // private boolean occupied;
+    private TableBox tableBox;
 
-    public void /*boolean*/ display(){
+    CreatingBox(TableBox a){
+        tableBox = a;
+    }
+
+    public void display(){
         window = new Stage();
 
         window.initModality(Modality.APPLICATION_MODAL);
@@ -92,8 +96,8 @@ public class CreatingBox{
             session.save(tempClient);
             session.getTransaction().commit();
 
-            OrderBox orderBox = new OrderBox();
-            /*occupied = */orderBox.display(tempClient);
+            OrderBox orderBox = new OrderBox(tableBox);
+            orderBox.display(tempClient);
         }else{
             AlertBox boxA = new AlertBox();
             boxA.display("This is not a valid name/surname!");

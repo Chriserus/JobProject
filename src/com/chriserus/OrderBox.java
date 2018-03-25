@@ -26,16 +26,21 @@ public class OrderBox extends MenuBox{
     private ObservableList<ItemEntity> productSelected, wholeOrder;
     private ClientEntity currentClient;
     private Stage window;
+    private TableBox tableBox;
     //private boolean occupied;
 
-    public /*boolean*/ void display(ClientEntity client){
+    OrderBox(TableBox a){
+        tableBox = a;
+    }
+
+    public /*boolean*/ void display(ClientEntity client) {
         currentClient = client;
 
         window = new Stage();
 
         //Adding table
-         table = new TableView<>();
-         tableOrder = new TableView<>();
+        table = new TableView<>();
+        tableOrder = new TableView<>();
 
         //Name
         TableColumn<ItemEntity, String> nameCol = new TableColumn<>("Name");
@@ -79,12 +84,12 @@ public class OrderBox extends MenuBox{
         vegetarianColO.setMinWidth(200);
         vegetarianColO.setCellValueFactory(new PropertyValueFactory<>("vegetarian"));
 
-        table.getColumns().addAll(nameCol,priceCol,caloriesCol,vegetarianCol);
-        tableOrder.getColumns().addAll(nameColO,priceColO,caloriesColO,vegetarianColO);
+        table.getColumns().addAll(nameCol, priceCol, caloriesCol, vegetarianCol);
+        tableOrder.getColumns().addAll(nameColO, priceColO, caloriesColO, vegetarianColO);
 
-        if(client.isVegetarian()){
+        if (client.isVegetarian()) {
             table.setItems(getProduct(true));
-        }else {
+        } else {
             table.setItems(getProduct(false));
         }
 
@@ -108,9 +113,9 @@ public class OrderBox extends MenuBox{
 
         Label caloriesLabel = new Label("Calories:");
 
-        addButton.setOnAction(e->addButtonClicked());
-        removeButton.setOnAction(e->deleteButtonClicked());
-        finalizeButton.setOnAction(e ->{
+        addButton.setOnAction(e -> addButtonClicked());
+        removeButton.setOnAction(e -> deleteButtonClicked());
+        finalizeButton.setOnAction(e -> {
             finalizeButtonClicked();
 
         });
@@ -145,18 +150,17 @@ public class OrderBox extends MenuBox{
         HBox hBox = new HBox();
         hBox.setSpacing(10);
         hBox.setAlignment(Pos.CENTER_RIGHT);
-        hBox.setPadding(new Insets(10,10,10,10));
+        hBox.setPadding(new Insets(10, 10, 10, 10));
         hBox.getChildren().addAll(vBox2, vBox1, finalizeButton);
-
 
 
         GridPane.setConstraints(table, 0, 0, 1, 3);
         GridPane.setConstraints(vBox, 1, 0);
         GridPane.setConstraints(tableOrder, 2, 0);
-        GridPane.setConstraints(hBox,2,2);
+        GridPane.setConstraints(hBox, 2, 2);
 
 
-        gp.getChildren().addAll(table, vBox, tableOrder,  hBox);
+        gp.getChildren().addAll(table, vBox, tableOrder, hBox);
 
         Scene scene = new Scene(gp);
 
@@ -165,7 +169,7 @@ public class OrderBox extends MenuBox{
 
         window.setScene(scene);
         window.show();
-      //  return occupied;
+
 
     }
 
@@ -216,7 +220,9 @@ public class OrderBox extends MenuBox{
         }
         session.getTransaction().commit();
         window.close();
-      //  occupied = true;
+        //this creates new "occupied" button and adds it to tableBox
+        tableBox.createNewButton(true);
+        tableBox.display();
     }
 
     private void addButtonClicked(){
