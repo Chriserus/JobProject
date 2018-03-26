@@ -118,10 +118,9 @@ public class TableBox {
 
                 //button action when occupied (click)
                 this.setOnAction(e -> {
+                    //sends client to occupiedBox
+                    occupiedBox.setClientEntity(client);
                     occupiedBox.display();
-                    //display if client is in place, which client is here
-                    System.out.println("Client name: " + client.getName() + " And surname: "
-                            + client.getSurname() + " " + client.getId());
                 });
             }else {
                 //or not occupied (addNew)...
@@ -131,7 +130,6 @@ public class TableBox {
                 } catch (FileNotFoundException e) {
                     e.printStackTrace();
                 }
-
                 Image tableIcon = new Image(inputStream);
                 this.setGraphic(new ImageView(tableIcon));
 

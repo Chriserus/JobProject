@@ -17,6 +17,8 @@ import javafx.stage.Stage;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 
+import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.util.List;
 
 public class OrderBox extends MenuBox{
@@ -28,7 +30,6 @@ public class OrderBox extends MenuBox{
     private TableBox tableBox;
     private List<TableBox.SeatButton> tableButtons;
     private int number;
-    //private boolean occupied;
 
     OrderBox(TableBox tableBox, int number){
         this.tableBox = tableBox;
@@ -181,6 +182,10 @@ public class OrderBox extends MenuBox{
         wholeOrder = tableOrder.getItems();
         for(ItemEntity item : wholeOrder)
             sum += item.getPrice();
+
+        //truncate, double had binary value, thus many 000000
+        sum = BigDecimal.valueOf(sum).setScale(3, RoundingMode.HALF_UP).doubleValue();
+
         return sum;
     }
 
@@ -202,7 +207,6 @@ public class OrderBox extends MenuBox{
         session.delete(currentClient);
         session.getTransaction().commit();
         window.close();
-     //   occupied = false;
     }
 
     //Update client info (total calories and order price) and makes Purchase entity, updates db
@@ -223,7 +227,8 @@ public class OrderBox extends MenuBox{
         }
         session.getTransaction().commit();
         window.close();
-        //this creates new "occupied" button and adds it to tableBox
+
+        //this sets button as occupied button and adds respective client
         TableBox.SeatButton button = tableButtons.get(number);
         button.setOccupied(true);
         button.updateButton();
