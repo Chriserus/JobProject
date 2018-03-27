@@ -15,6 +15,9 @@ public class PurchaseEntity {
         itemByMenuid = item;
     }
 
+    public PurchaseEntity() {
+    }
+
     @Id
     @Column(name = "id", nullable = false)
     @GeneratedValue(strategy = GenerationType.AUTO)
