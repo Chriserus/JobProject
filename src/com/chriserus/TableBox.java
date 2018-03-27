@@ -23,7 +23,7 @@ public class TableBox {
     private GridPane grid;
     private Scene scene;
 
-    //HUGE constructor
+    // constructor
     TableBox(){
         //buttons array 0,1,2,3
         tableButtons = new ArrayList<>(4);
