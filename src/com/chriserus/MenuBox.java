@@ -152,17 +152,22 @@ public class MenuBox {
         allProducts = table.getItems();
         productSelected = table.getSelectionModel().getSelectedItems();
 
+try{
+    //Deleting product from db
+    SessionFactory sessionFactory = HibernateFactory.getSessionFactory();
+    Session session = sessionFactory.getCurrentSession();
 
-        //Deleting product from db
-        SessionFactory sessionFactory = HibernateFactory.getSessionFactory();
-        Session session = sessionFactory.getCurrentSession();
+    session.beginTransaction();
+    ItemEntity product = table.getSelectionModel().getSelectedItem();
+    session.delete(product);
+    session.getTransaction().commit();
 
-        session.beginTransaction();
-        ItemEntity product = table.getSelectionModel().getSelectedItem();
-        session.delete(product);
-        session.getTransaction().commit();
+    productSelected.forEach(allProducts::remove);
+}catch(Exception e){
+    AlertBox alert = new AlertBox();
+    alert.display("You can't delete that entry! \n Someone ordered it!");
+}
 
-        productSelected.forEach(allProducts::remove);
 
     }
 }

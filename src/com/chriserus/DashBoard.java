@@ -8,6 +8,8 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.GridPane;
 import javafx.stage.Stage;
+import org.hibernate.Session;
+import org.hibernate.SessionFactory;
 
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -75,6 +77,12 @@ public class DashBoard {
     }
 
     private void appClose() {
+        SessionFactory sessionFactory = HibernateFactory.getSessionFactory();
+        Session session = sessionFactory.getCurrentSession();
+        session.beginTransaction();
+        session.createQuery("delete from PurchaseEntity").executeUpdate();
+        session.createQuery("delete from ClientEntity ").executeUpdate();
+        session.getTransaction().commit();
         Platform.exit();
         HibernateFactory.close();
     }
