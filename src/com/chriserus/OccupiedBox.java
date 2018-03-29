@@ -24,7 +24,7 @@ public class OccupiedBox {
 
     private ClientEntity clientEntity;
     private Button finishedButton, cancelButton;
-    private Label nameAndSurname1, nameAndSurname2, price1, price2, calories1, calories2;
+    private Label nameAndSurname, price,  calories;
     private GridPane grid;
     private TableView<ItemEntity> orderTable;
     private int currentClientId;
@@ -33,12 +33,9 @@ public class OccupiedBox {
     OccupiedBox(){
         finishedButton = new Button("Print receipt");
         cancelButton = new Button("Back");
-        nameAndSurname1 = new Label();
-        price1 = new Label();
-        calories1 = new Label();
-        nameAndSurname2 = new Label();
-        price2 = new Label();
-        calories2 = new Label();
+        nameAndSurname = new Label();
+        price = new Label();
+        calories = new Label();
         grid = new GridPane();
         orderTable = new TableView<>();
 
@@ -98,23 +95,17 @@ public class OccupiedBox {
         System.out.println("I got client: " + clientEntity.getName() + clientEntity.getSurname() + clientEntity.getId() +
         " " + clientEntity.getOrderTotal());
         //creating gui components
-        price1.setText("Total price: ");
-        price1.setMinWidth(200);
-        price2.setText(clientEntity.getOrderTotal().toString() + "\n" + "\n" );
-        price2.setMinWidth(200);
-        calories1.setText("Total calories: ");
-        calories1.setMinWidth(200);
-        calories2.setText(clientEntity.getCaloriesTotal().toString()+ "\n"+ "\n" );
-        calories2.setMinWidth(200);
-        nameAndSurname1.setText("Name and surname:");
-        nameAndSurname1.setMinWidth(200);
-        nameAndSurname2.setText(clientEntity.getName() + " " + clientEntity.getSurname()+ "\n"+ "\n" );
-        nameAndSurname2.setMinWidth(200);
+        price.setText("Total price: " + "\n"+clientEntity.getOrderTotal().toString());
+        price.setMinWidth(200);
+        calories.setText("Total calories: " +"\n"+clientEntity.getCaloriesTotal().toString());
+        calories.setMinWidth(200);
+        nameAndSurname.setText("Name and surname: "+"\n"+clientEntity.getName() + " " + clientEntity.getSurname());
+        nameAndSurname.setMinWidth(200);
 
         VBox vBox = new VBox();
         //vBox.setSpacing(10);
         vBox.setAlignment(Pos.CENTER_LEFT);
-        vBox.getChildren().addAll(nameAndSurname1, nameAndSurname2, price1, price2, calories1, calories2);
+        vBox.getChildren().addAll(nameAndSurname, price, calories);
 
 
 
