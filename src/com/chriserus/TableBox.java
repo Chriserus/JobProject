@@ -119,7 +119,10 @@ public class TableBox {
                 //button action when occupied (click)
                 this.setOnAction(e -> {
                     //sends client to occupiedBox
-                    occupiedBox.setClientEntity(client);
+                    if(occupiedBox.getClientEntity() == null){
+                        occupiedBox.setClientEntity(client);
+                    }
+
                     occupiedBox.display();
                 });
             }else {

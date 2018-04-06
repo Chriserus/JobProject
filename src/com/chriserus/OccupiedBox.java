@@ -28,6 +28,9 @@ public class OccupiedBox {
     private GridPane grid;
     private TableView<ItemEntity> orderTable;
     private int currentClientId;
+    private Scene scene;
+    private Stage window;
+    private VBox vBox;
 
 
     OccupiedBox(){
@@ -38,12 +41,19 @@ public class OccupiedBox {
         calories = new Label();
         grid = new GridPane();
         orderTable = new TableView<>();
-
+        window = new Stage();
+        vBox = new VBox();
+        window.initModality(Modality.APPLICATION_MODAL);
     }
 
     public void setClientEntity(ClientEntity clientEntity) {
         this.clientEntity = clientEntity;
     }
+
+    public ClientEntity getClientEntity(){
+        return clientEntity;
+    }
+
 
     private void setOrder(){
         ObservableList<ItemEntity> products;
@@ -72,7 +82,6 @@ public class OccupiedBox {
     }
 
     public void display(){
-        Stage window = new Stage();
 
         //getting the factory
         SessionFactory sessionFactory = HibernateFactory.getSessionFactory();
@@ -89,7 +98,6 @@ public class OccupiedBox {
 
         setOrder();
 
-        window.initModality(Modality.APPLICATION_MODAL);
         window.setTitle("Current client");
 
         System.out.println("I got client: " + clientEntity.getName() + clientEntity.getSurname() + clientEntity.getId() +
@@ -102,10 +110,12 @@ public class OccupiedBox {
         nameAndSurname.setText("Name and surname: "+"\n"+clientEntity.getName() + " " + clientEntity.getSurname());
         nameAndSurname.setMinWidth(200);
 
-        VBox vBox = new VBox();
-        //vBox.setSpacing(10);
-        vBox.setAlignment(Pos.CENTER_LEFT);
-        vBox.getChildren().addAll(nameAndSurname, price, calories);
+        if(vBox.getChildren().isEmpty()){
+            vBox.setSpacing(10);
+            vBox.setAlignment(Pos.CENTER_LEFT);
+            vBox.getChildren().addAll(nameAndSurname, price, calories);
+        }
+
 
 
 
@@ -113,28 +123,31 @@ public class OccupiedBox {
         finishedButton.setMinWidth(200);
         cancelButton.setMinWidth(100);
 
-        //Name
-        TableColumn<ItemEntity, String> nameCol = new TableColumn<>("Name");
-        nameCol.setMinWidth(180);
-        nameCol.setCellValueFactory(new PropertyValueFactory<>("name"));
+        if(orderTable.getColumns().isEmpty()){
+            //Name
+            TableColumn<ItemEntity, String> nameCol = new TableColumn<>("Name");
+            nameCol.setMinWidth(180);
+            nameCol.setCellValueFactory(new PropertyValueFactory<>("name"));
 
-        //Price
-        TableColumn<ItemEntity, Double> priceCol = new TableColumn<>("Price");
-        priceCol.setMinWidth(180);
-        priceCol.setCellValueFactory(new PropertyValueFactory<>("price"));
+            //Price
+            TableColumn<ItemEntity, Double> priceCol = new TableColumn<>("Price");
+            priceCol.setMinWidth(180);
+            priceCol.setCellValueFactory(new PropertyValueFactory<>("price"));
 
-        //Calories
-        TableColumn<ItemEntity, Integer> caloriesCol = new TableColumn<>("Calories");
-        caloriesCol.setMinWidth(180);
-        caloriesCol.setCellValueFactory(new PropertyValueFactory<>("calories"));
+            //Calories
+            TableColumn<ItemEntity, Integer> caloriesCol = new TableColumn<>("Calories");
+            caloriesCol.setMinWidth(180);
+            caloriesCol.setCellValueFactory(new PropertyValueFactory<>("calories"));
 
-        //Vegetarian
-        TableColumn<ItemEntity, Boolean> vegetarianCol = new TableColumn<>("Vegetarian");
-        vegetarianCol.setMinWidth(180);
-        vegetarianCol.setCellValueFactory(new PropertyValueFactory<>("vegetarian"));
+            //Vegetarian
+            TableColumn<ItemEntity, Boolean> vegetarianCol = new TableColumn<>("Vegetarian");
+            vegetarianCol.setMinWidth(180);
+            vegetarianCol.setCellValueFactory(new PropertyValueFactory<>("vegetarian"));
 
-        orderTable.setMinHeight(800);
-        orderTable.getColumns().addAll(nameCol,priceCol,caloriesCol,vegetarianCol);
+            orderTable.setMinHeight(800);
+            orderTable.getColumns().addAll(nameCol,priceCol,caloriesCol,vegetarianCol);
+        }
+
 
 
 
@@ -149,9 +162,13 @@ public class OccupiedBox {
         grid.setPadding(new Insets(10, 10, 10, 10));
         grid.setVgap(8);
         grid.setHgap(10);
-        grid.getChildren().addAll(vBox,finishedButton,cancelButton, orderTable);
+        if(grid.getChildren().isEmpty()){
+            grid.getChildren().addAll(vBox,finishedButton,cancelButton, orderTable);
+            scene = new Scene(grid, 1000, 900);
+        }
 
-        Scene scene = new Scene(grid, 1000, 900);
+
+
         window.setScene(scene);
         window.showAndWait();
     }
