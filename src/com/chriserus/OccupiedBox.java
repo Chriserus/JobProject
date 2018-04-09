@@ -103,7 +103,7 @@ public class OccupiedBox {
         System.out.println("I got client: " + clientEntity.getName() + clientEntity.getSurname() + clientEntity.getId() +
         " " + clientEntity.getOrderTotal());
         //creating gui components
-        price.setText("Total price: " + "\n"+clientEntity.getOrderTotal().toString());
+        price.setText("Total price: " + "\n"+"$"+clientEntity.getOrderTotal().toString());
         price.setMinWidth(200);
         calories.setText("Total calories: " +"\n"+clientEntity.getCaloriesTotal().toString());
         calories.setMinWidth(200);

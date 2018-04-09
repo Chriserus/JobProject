@@ -253,7 +253,7 @@ public class OrderBox extends MenuBox{
     }
 
     private void resetSum(String price, String calories){
-        priceSum.setText(price);
+        priceSum.setText("$"+price);
         caloriesSum.setText(calories);
     }
 
