@@ -1,0 +1,19 @@
+<?xml version='1.0' encoding='utf-8'?>
+<!DOCTYPE hibernate-mapping PUBLIC
+    "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+    "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+
+    <class name="com.chriserus.hibernate.PurchaseEntity" table="Purchase" schema="restaurant">
+        <id name="id">
+            <column name="id" sql-type="int(10) unsigned"/>
+            <generator class="identity" />
+        </id>
+        <many-to-one name="clientByClientid" class="com.chriserus.hibernate.ClientEntity">
+            <column name="clientid"/>
+        </many-to-one>
+        <many-to-one name="itemByMenuid" class="com.chriserus.hibernate.ItemEntity">
+            <column name="menuid"/>
+        </many-to-one>
+    </class>
+</hibernate-mapping>
