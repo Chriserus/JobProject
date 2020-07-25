@@ -8,7 +8,7 @@
         <property name="connection.url">jdbc:mysql://localhost:3306/restaurant?useLegacyDatetimeCode=false?useSSL=false&amp;serverTimezone=Europe/Warsaw</property>
         <property name="connection.username">root</property>
         <property name="connection.password">root</property>
-        <property name="connection.pool_size">5</property> <!-- TODO: Change back to 1 after refactor  -->
+        <property name="connection.pool_size">1</property>
         <property name="dialect">org.hibernate.dialect.MySQLDialect</property>
         <property name="hibernate.physical_naming_strategy">com.chriserus.hibernate.SnakeCasePhysicalNamingStrategy
         </property>

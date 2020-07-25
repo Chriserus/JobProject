@@ -20,7 +20,6 @@ import javafx.scene.layout.VBox;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import org.hibernate.Session;
-import org.hibernate.SessionFactory;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;
@@ -32,63 +31,50 @@ public class OrderBox extends MenuBox {
     private ObservableList<Item> productSelected, wholeOrder;
     private Client currentClient;
     private Stage window;
-    private TableBox tableBox;
-    private List<TableBox.SeatButton> tableButtons;
-    private int number;
+    private final List<TableBox.SeatButton> tableButtons;
+    private final int number;
 
     OrderBox(TableBox tableBox, int number) {
-        this.tableBox = tableBox;
         this.tableButtons = tableBox.getTableButtons();
         this.number = number;
     }
 
     public void display(Client client) {
         currentClient = client;
-
         window = new Stage();
-
-        //Adding table
         table = new TableView<>();
         tableOrder = new TableView<>();
 
-        //Name
         TableColumn<Item, String> nameCol = new TableColumn<>("Name");
         nameCol.setMinWidth(200);
         nameCol.setCellValueFactory(new PropertyValueFactory<>("name"));
 
-        //Price
         TableColumn<Item, Double> priceCol = new TableColumn<>("Price");
         priceCol.setMinWidth(200);
         priceCol.setCellValueFactory(new PropertyValueFactory<>("price"));
 
-        //Calories
         TableColumn<Item, Integer> caloriesCol = new TableColumn<>("Calories");
         caloriesCol.setMinWidth(200);
         caloriesCol.setCellValueFactory(new PropertyValueFactory<>("calories"));
 
-        //Vegetarian
         TableColumn<Item, Boolean> vegetarianCol = new TableColumn<>("Vegetarian");
         vegetarianCol.setMinWidth(200);
         vegetarianCol.setCellValueFactory(new PropertyValueFactory<>("vegetarian"));
 
         //SECOND TABLE COLUMNS, CAN'T REUSE COLUMN OBJECTS
 
-        //Name
         TableColumn<Item, String> nameColO = new TableColumn<>("Name");
         nameColO.setMinWidth(200);
         nameColO.setCellValueFactory(new PropertyValueFactory<>("name"));
 
-        //Price
         TableColumn<Item, Double> priceColO = new TableColumn<>("Price");
         priceColO.setMinWidth(200);
         priceColO.setCellValueFactory(new PropertyValueFactory<>("price"));
 
-        //Calories
         TableColumn<Item, Integer> caloriesColO = new TableColumn<>("Calories");
         caloriesColO.setMinWidth(200);
         caloriesColO.setCellValueFactory(new PropertyValueFactory<>("calories"));
 
-        //Vegetarian
         TableColumn<Item, Boolean> vegetarianColO = new TableColumn<>("Vegetarian");
         vegetarianColO.setMinWidth(200);
         vegetarianColO.setCellValueFactory(new PropertyValueFactory<>("vegetarian"));
@@ -107,7 +93,6 @@ public class OrderBox extends MenuBox {
         Button removeButton = new Button("Remove");
         Button finalizeButton = new Button("Finalize");
 
-        //Adding text fields for order
         priceSum = new TextField();
         priceSum.setPromptText("Total");
         priceSum.setEditable(false);
@@ -124,17 +109,12 @@ public class OrderBox extends MenuBox {
 
         addButton.setOnAction(e -> addButtonClicked());
         removeButton.setOnAction(e -> deleteButtonClicked());
-        finalizeButton.setOnAction(e -> {
-            finalizeButtonClicked();
-
-        });
+        finalizeButton.setOnAction(e -> finalizeButtonClicked());
         window.setOnCloseRequest(e -> {
             e.consume();
             deleteClient();
         });
 
-
-        //Layout
         GridPane gp = new GridPane();
         gp.setHgap(10);
         gp.setVgap(10);
@@ -144,13 +124,11 @@ public class OrderBox extends MenuBox {
         vBox.setAlignment(Pos.CENTER);
         vBox.getChildren().addAll(addButton, removeButton);
 
-        //Price VBox
         VBox vBox1 = new VBox();
         vBox1.setSpacing(10);
         vBox1.setAlignment(Pos.CENTER_LEFT);
         vBox1.getChildren().addAll(priceLabel, priceSum);
 
-        //Calories vBox
         VBox vBox2 = new VBox();
         vBox2.setSpacing(10);
         vBox2.setAlignment(Pos.CENTER_LEFT);
@@ -187,10 +165,7 @@ public class OrderBox extends MenuBox {
         wholeOrder = tableOrder.getItems();
         for (Item item : wholeOrder)
             sum += item.getPrice();
-
-        //truncate, double had binary value, thus many 000000
         sum = BigDecimal.valueOf(sum).setScale(3, RoundingMode.HALF_UP).doubleValue();
-
         return sum;
     }
 
@@ -202,38 +177,28 @@ public class OrderBox extends MenuBox {
         return sum;
     }
 
-    //Deletes the client and exits
     private void deleteClient() {
-        //getting the factory
-        SessionFactory sessionFactory = HibernateUtil.getSessionFactory();
-        Session session = sessionFactory.getCurrentSession();
-        //Deleting a customer
-        session.beginTransaction();
-        session.delete(currentClient);
-        session.getTransaction().commit();
-        window.close();
+        try (Session session = HibernateUtil.getSessionFactory().getCurrentSession()) {
+            session.beginTransaction();
+            session.delete(currentClient);
+            session.getTransaction().commit();
+            window.close();
+        }
     }
 
-    //Update client info (total calories and order price) and makes Purchase entity, updates db
     private void finalizeButtonClicked() {
-        //getting the factory
-        SessionFactory sessionFactory = HibernateUtil.getSessionFactory();
-        Session session = sessionFactory.getCurrentSession();
-        session.beginTransaction();
-        //Updating the customer
-        Client client = session.get(Client.class, currentClient.getId());
-        client.setCaloriesTotal(sumCalories());
-        client.setOrderTotal(sumPrice());
-
-        //Creating and sending an order
-        for (Item item : tableOrder.getItems()) {
-            Purchase purchase = new Purchase(currentClient, item);
-            session.save(purchase);
+        try (Session session = HibernateUtil.getSessionFactory().getCurrentSession()) {
+            session.beginTransaction();
+            Client client = session.get(Client.class, currentClient.getId());
+            client.setCaloriesTotal(sumCalories());
+            client.setOrderTotal(sumPrice());
+            for (Item item : tableOrder.getItems()) {
+                Purchase purchase = new Purchase(currentClient, item);
+                session.save(purchase);
+            }
+            session.getTransaction().commit();
         }
-        session.getTransaction().commit();
         window.close();
-
-        //this sets button as occupied button and adds respective client
         TableBox.SeatButton button = tableButtons.get(number);
         button.setOccupied(true);
         button.updateButton();

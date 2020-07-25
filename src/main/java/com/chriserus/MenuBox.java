@@ -17,7 +17,6 @@ import javafx.scene.layout.VBox;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import org.hibernate.Session;
-import org.hibernate.SessionFactory;
 
 import java.util.List;
 
@@ -29,31 +28,25 @@ public class MenuBox {
     public void displayMenu() {
         Stage window = new Stage();
 
-        //Adding labels and textFields
         nameInput = new TextField();
         priceInput = new TextField();
         caloriesInput = new TextField();
         isVegBox = new CheckBox("Is a vegetarian?");
 
-        //Adding table
         table = new TableView<>();
 
-        //Name
         TableColumn<Item, String> nameCol = new TableColumn<>("Name");
         nameCol.setMinWidth(200);
         nameCol.setCellValueFactory(new PropertyValueFactory<>("name"));
 
-        //Price
         TableColumn<Item, Double> priceCol = new TableColumn<>("Price");
         priceCol.setMinWidth(200);
         priceCol.setCellValueFactory(new PropertyValueFactory<>("price"));
 
-        //Calories
         TableColumn<Item, Integer> caloriesCol = new TableColumn<>("Calories");
         caloriesCol.setMinWidth(200);
         caloriesCol.setCellValueFactory(new PropertyValueFactory<>("calories"));
 
-        //Vegetarian
         TableColumn<Item, Boolean> vegetarianCol = new TableColumn<>("Vegetarian");
         vegetarianCol.setMinWidth(200);
         vegetarianCol.setCellValueFactory(new PropertyValueFactory<>("vegetarian"));
@@ -62,7 +55,6 @@ public class MenuBox {
         table.setMinHeight(800);
         table.getColumns().addAll(nameCol, priceCol, caloriesCol, vegetarianCol);
 
-        //Creating input fields
         nameInput.setPromptText("Name");
         nameInput.setMinWidth(100);
 
@@ -72,13 +64,11 @@ public class MenuBox {
         caloriesInput.setPromptText("Calories");
         caloriesInput.setMinWidth(100);
 
-        //Add and delete buttons
         Button addButton = new Button("Add");
         addButton.setMinWidth(100);
         Button deleteButton = new Button("Delete");
         deleteButton.setMinWidth(100);
 
-        //Adding functionality to buttons
         addButton.setOnAction(e -> addButtonClicked());
         deleteButton.setOnAction(e -> deleteButtonClicked());
 
@@ -104,23 +94,17 @@ public class MenuBox {
         window.show();
     }
 
-    ObservableList<Item> getProduct(boolean isVeg) {
-
+    public ObservableList<Item> getProduct(boolean isVeg) {
         List<Item> itemsList;
         ObservableList<Item> products;
-        //getting the factory
-        SessionFactory sessionFactory = HibernateUtil.getSessionFactory();
-        Session session = sessionFactory.getCurrentSession();
-        //getting the list of items
-
-        if (isVeg) {
-            session.beginTransaction();
-            itemsList = session.createQuery("from Item where vegetarian=true ").getResultList();
-            products = FXCollections.observableArrayList(itemsList);
-            session.getTransaction().commit();
-        } else {
-            session.beginTransaction();
-            itemsList = session.createQuery("from Item ").getResultList();
+        try (Session session = HibernateUtil.getSessionFactory().getCurrentSession()) {
+            if (isVeg) {
+                session.beginTransaction();
+                itemsList = session.createQuery("from Item where vegetarian=true ").getResultList();
+            } else {
+                session.beginTransaction();
+                itemsList = session.createQuery("from Item ").getResultList();
+            }
             products = FXCollections.observableArrayList(itemsList);
             session.getTransaction().commit();
         }
@@ -134,38 +118,26 @@ public class MenuBox {
         product.setCalories(Integer.parseInt(caloriesInput.getText()));
         product.setVegetarian(isVegBox.isSelected());
         table.getItems().add(product);
-
-        //Sending product to db
-        SessionFactory sessionFactory = HibernateUtil.getSessionFactory();
-        Session session = sessionFactory.getCurrentSession();
-
-        session.beginTransaction();
-        session.save(product);
-        session.getTransaction().commit();
-
-        //Clearing fields
+        try (Session session = HibernateUtil.getSessionFactory().getCurrentSession()) {
+            session.beginTransaction();
+            session.save(product);
+            session.getTransaction().commit();
+        }
         nameInput.clear();
         priceInput.clear();
         caloriesInput.clear();
         isVegBox.setSelected(false);
-
     }
 
     private void deleteButtonClicked() {
         ObservableList<Item> productSelected, allProducts;
         allProducts = table.getItems();
         productSelected = table.getSelectionModel().getSelectedItems();
-
-        try {
-            //Deleting product from db
-            SessionFactory sessionFactory = HibernateUtil.getSessionFactory();
-            Session session = sessionFactory.getCurrentSession();
-
+        try (Session session = HibernateUtil.getSessionFactory().getCurrentSession()) {
             session.beginTransaction();
             Item product = table.getSelectionModel().getSelectedItem();
             session.delete(product);
             session.getTransaction().commit();
-
             productSelected.forEach(allProducts::remove);
         } catch (Exception e) {
             AlertBox alert = new AlertBox();

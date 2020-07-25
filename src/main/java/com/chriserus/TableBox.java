@@ -17,29 +17,22 @@ import java.util.List;
 
 public class TableBox {
 
-    private List<SeatButton> tableButtons;
-    private Stage window;
-    private TableBox tableBox;
-    private GridPane grid;
-    private Scene scene;
+    private final List<SeatButton> tableButtons;
+    private final Stage window;
+    private final TableBox tableBox;
 
-    // constructor
     TableBox() {
-        //buttons array 0,1,2,3
         tableButtons = new ArrayList<>(4);
-        //gui stuff
         window = new Stage();
-        grid = new GridPane();
+        GridPane grid = new GridPane();
         window.initModality(Modality.APPLICATION_MODAL);
         window.setTitle("Table overview");
         grid.setPadding(new Insets(10, 10, 10, 10));
         grid.setVgap(10);
         grid.setHgap(10);
-        //variable for storing THIS object
         tableBox = this;
 
         System.out.println("Creating new buttons...");
-        //Loop for creating button grid 2x2, invoked once
         int count = 0;
         for (int i = 0; i < 2; i++) {
             for (int j = 0; j < 2; j++) {
@@ -51,19 +44,16 @@ public class TableBox {
                 count++;
             }
         }
-        //adding whole table of buttons to the grid
         grid.getChildren().addAll(tableButtons);
         System.out.println("Size of list: " + tableButtons.size());
         System.out.println("The list: " + tableButtons);
 
 
-        scene = new Scene(grid, 360, 360);
+        Scene scene = new Scene(grid, 360, 360);
         window.setScene(scene);
         window.showAndWait();
     }
 
-
-    //window getter to check on dash if created earlier
     public Stage getWindow() {
         return window;
     }
@@ -72,7 +62,6 @@ public class TableBox {
         return tableButtons;
     }
 
-    //inner SeatButton class
     class SeatButton extends Button {
         boolean occupied;
         int number;
@@ -82,7 +71,6 @@ public class TableBox {
 
         SeatButton() {
             super();
-            //default after creation false, then we can change it with setter
             occupied = false;
         }
 
@@ -98,16 +86,13 @@ public class TableBox {
         void setNumber(int number) {
             this.number = number;
             System.out.println("Number of " + this + " is " + number);
-            //creation of creatingBox
             creatingBox = new CreatingBox(tableBox, number);
-            //creation of occupiedBox
             occupiedBox = new OccupiedBox();
         }
 
         public void updateButton() {
+            FileInputStream inputStream = null;
             if (occupied) {
-                //setting graphic. occupied (person)...
-                FileInputStream inputStream = null;
                 try {
                     inputStream = new FileInputStream(Thread.currentThread().getContextClassLoader().getResource("icons/person").getPath());
                 } catch (FileNotFoundException e) {
@@ -115,19 +100,13 @@ public class TableBox {
                 }
                 Image personIcon = new Image(inputStream);
                 this.setGraphic(new ImageView(personIcon));
-
-                //button action when occupied (click)
                 this.setOnAction(e -> {
-                    //sends client to occupiedBox
                     if (occupiedBox.getClient() == null) {
                         occupiedBox.setClient(client);
                     }
-
                     occupiedBox.display();
                 });
             } else {
-                //or not occupied (addNew)...
-                FileInputStream inputStream = null;
                 try {
                     inputStream = new FileInputStream(Thread.currentThread().getContextClassLoader().getResource("icons/addNew").getPath());
                 } catch (FileNotFoundException e) {
@@ -136,9 +115,7 @@ public class TableBox {
                 Image tableIcon = new Image(inputStream);
                 this.setGraphic(new ImageView(tableIcon));
 
-                this.setOnAction(e -> {
-                    creatingBox.display();
-                });
+                this.setOnAction(e -> creatingBox.display());
             }
         }
     }

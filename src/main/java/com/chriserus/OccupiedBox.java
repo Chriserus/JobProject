@@ -19,7 +19,6 @@ import javafx.scene.layout.VBox;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import org.hibernate.Session;
-import org.hibernate.SessionFactory;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -27,14 +26,17 @@ import java.util.List;
 public class OccupiedBox {
 
     private Client client;
-    private Button finishedButton, cancelButton;
-    private Label nameAndSurname, price, calories;
-    private GridPane grid;
-    private TableView<Item> orderTable;
+    private final Button finishedButton;
+    private final Button cancelButton;
+    private final Label nameAndSurname;
+    private final Label price;
+    private final Label calories;
+    private final GridPane grid;
+    private final TableView<Item> orderTable;
     private Long currentClientId;
     private Scene scene;
-    private Stage window;
-    private VBox vBox;
+    private final Stage window;
+    private final VBox vBox;
 
 
     OccupiedBox() {
@@ -60,102 +62,69 @@ public class OccupiedBox {
 
 
     private void setOrder() {
-        ObservableList<Item> products;
-        //getting the factory
-        SessionFactory sessionFactory = HibernateUtil.getSessionFactory();
-        Session session = sessionFactory.getCurrentSession();
-        session.beginTransaction();
-        //getting list of x client items ordered
-        //itemList = session.createQuery("from Purchase as p where p.clientByClientId=" + currentClientId)
-        // .getResultList();
-
-        List<Purchase> purchaseList = session.createQuery
-                ("from Purchase p where p.client.id=" + currentClientId ).getResultList();
-        System.out.println(purchaseList);
-        ArrayList<Item> itemList = new ArrayList<>();
-        for (Purchase p : purchaseList) {
-            itemList.add(p.getItem());
+        try (Session session = HibernateUtil.getSessionFactory().getCurrentSession()) {
+            session.beginTransaction();
+            List<Purchase> purchaseList = session.createQuery
+                    ("from Purchase p where p.client.id=" + currentClientId).getResultList();
+            System.out.println(purchaseList);
+            ArrayList<Item> itemList = new ArrayList<>();
+            for (Purchase p : purchaseList) {
+                itemList.add(p.getItem());
+            }
+            ObservableList<Item> products = FXCollections.observableArrayList(itemList);
+            orderTable.setItems(products);
+            System.out.println(products);
+            session.getTransaction().commit();
         }
-        products = FXCollections.observableArrayList(itemList);
-        orderTable.setItems(products);
-        System.out.println(products);
-        //Creating and sending an order
-        session.getTransaction().commit();
-
-
     }
 
     public void display() {
-
-        //getting the factory
-        SessionFactory sessionFactory = HibernateUtil.getSessionFactory();
-        Session session = sessionFactory.getCurrentSession();
-        session.beginTransaction();
-        //Updating the customer
-        Client client = session.get(Client.class, this.client.getId());
-        this.client.setCaloriesTotal(client.getCaloriesTotal());
-        this.client.setOrderTotal(client.getOrderTotal());
-        currentClientId = this.client.getId();
-        System.out.println("I got id nr: " + currentClientId);
-        //Creating and sending an order
-        session.getTransaction().commit();
-
+        try (Session session = HibernateUtil.getSessionFactory().getCurrentSession()) {
+            session.beginTransaction();
+            Client client = session.get(Client.class, this.client.getId());
+            this.client.setCaloriesTotal(client.getCaloriesTotal());
+            this.client.setOrderTotal(client.getOrderTotal());
+            currentClientId = this.client.getId();
+            System.out.println("I got id nr: " + currentClientId);
+            session.getTransaction().commit();
+        }
         setOrder();
-
         window.setTitle("Current client");
-
         System.out.println("I got client: " + this.client.getFirstName() + this.client.getSecondName() + this.client.getId() +
                 " " + this.client.getOrderTotal());
-        //creating gui components
         price.setText("Total price: " + "\n" + "$" + this.client.getOrderTotal().toString());
         price.setMinWidth(200);
         calories.setText("Total calories: " + "\n" + this.client.getCaloriesTotal().toString());
         calories.setMinWidth(200);
         nameAndSurname.setText("Name and surname: " + "\n" + this.client.getFirstName() + " " + this.client.getSecondName());
         nameAndSurname.setMinWidth(200);
-
         if (vBox.getChildren().isEmpty()) {
             vBox.setSpacing(10);
             vBox.setAlignment(Pos.CENTER_LEFT);
             vBox.getChildren().addAll(nameAndSurname, price, calories);
         }
-
-
         finishedButton.setMinWidth(200);
         cancelButton.setMinWidth(100);
-
         if (orderTable.getColumns().isEmpty()) {
-            //Name
             TableColumn<Item, String> nameCol = new TableColumn<>("Name");
             nameCol.setMinWidth(180);
             nameCol.setCellValueFactory(new PropertyValueFactory<>("name"));
-
-            //Price
             TableColumn<Item, Double> priceCol = new TableColumn<>("Price");
             priceCol.setMinWidth(180);
             priceCol.setCellValueFactory(new PropertyValueFactory<>("price"));
-
-            //Calories
             TableColumn<Item, Integer> caloriesCol = new TableColumn<>("Calories");
             caloriesCol.setMinWidth(180);
             caloriesCol.setCellValueFactory(new PropertyValueFactory<>("calories"));
-
-            //Vegetarian
             TableColumn<Item, Boolean> vegetarianCol = new TableColumn<>("Vegetarian");
             vegetarianCol.setMinWidth(180);
             vegetarianCol.setCellValueFactory(new PropertyValueFactory<>("vegetarian"));
-
             orderTable.setMinHeight(800);
             orderTable.getColumns().addAll(nameCol, priceCol, caloriesCol, vegetarianCol);
         }
-
-
         GridPane.setConstraints(vBox, 0, 0);
         GridPane.setConstraints(finishedButton, 2, 3);
         GridPane.setConstraints(cancelButton, 0, 3);
         GridPane.setConstraints(orderTable, 1, 0, 2, 2);
-
-
         grid.setPadding(new Insets(10, 10, 10, 10));
         grid.setVgap(8);
         grid.setHgap(10);
@@ -163,8 +132,6 @@ public class OccupiedBox {
             grid.getChildren().addAll(vBox, finishedButton, cancelButton, orderTable);
             scene = new Scene(grid, 1000, 900);
         }
-
-
         window.setScene(scene);
         window.showAndWait();
     }

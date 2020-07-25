@@ -6,7 +6,7 @@ plugins {
 }
 
 
-mainClassName = 'com.chriserus.MainGUI'
+mainClassName = 'com.chriserus.Main'
 run.dependsOn update
 liquibase {
     activities {
@@ -15,7 +15,6 @@ liquibase {
             url 'jdbc:mysql://localhost:3306/restaurant?useLegacyDatetimeCode=false?useSSL=false&serverTimezone=Europe/Warsaw'
             username 'root'
             password 'root'
-            driver 'com.mysql.jdbc.Driver'
         }
         runList = 'changelog'
     }
