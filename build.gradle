@@ -1,13 +1,28 @@
 plugins {
     id 'application'
     id 'org.openjfx.javafxplugin' version '0.0.8'
+    id 'org.liquibase.gradle' version "2.0.4"
 }
 
-mainClassName='com.chriserus.MainGUI'
+
+mainClassName = 'com.chriserus.MainGUI'
+run.dependsOn update
+liquibase {
+    activities {
+        changelog {
+            changeLogFile 'src/main/resources/db/changelog-master.xml'
+            url 'jdbc:mysql://localhost:3306/restaurant?useLegacyDatetimeCode=false?useSSL=false&serverTimezone=Europe/Warsaw'
+            username 'root'
+            password 'root'
+            driver 'com.mysql.jdbc.Driver'
+        }
+        runList = 'changelog'
+    }
+}
 
 javafx {
     version = "14"
-    modules = [ 'javafx.controls' ]
+    modules = ['javafx.controls']
 }
 
 repositories {
@@ -18,12 +33,15 @@ dependencies {
     implementation 'antlr:antlr:2.7.7'
     implementation 'com.fasterxml:classmate:1.3.0'
     implementation 'dom4j:dom4j:1.6.1'
-    implementation 'org.hibernate.common:hibernate-commons-annotations:5.0.1.Final'
-    implementation 'org.hibernate:hibernate-core:5.2.14.Final'
-    implementation 'org.hibernate.javax.persistence:hibernate-jpa-2.1-api:1.0.0.Final'
+    implementation 'org.hibernate.orm:hibernate-core:6.0.0.Alpha5'
+    implementation 'mysql:mysql-connector-java:8.0.21'
     implementation 'org.jboss:jandex:2.0.3.Final'
     implementation 'org.javassist:javassist:3.22.0-GA'
     implementation 'org.jboss.logging:jboss-logging:3.3.1.Final'
     implementation 'org.jboss.spec.javax.transaction:jboss-transaction-api_1.2_spec:1.0.1.Final'
-    implementation 'mysql:mysql-connector-java:6.0.6'
+    implementation 'org.liquibase:liquibase-core:4.0.0'
+    liquibaseRuntime 'javax.xml.bind:jaxb-api:2.3.1'
+    liquibaseRuntime 'org.liquibase:liquibase-core:3.8.1'
+    liquibaseRuntime 'org.liquibase:liquibase-groovy-dsl:2.1.1'
+    liquibaseRuntime 'mysql:mysql-connector-java:8.0.21'
 }

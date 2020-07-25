@@ -1,5 +1,6 @@
 package com.chriserus;
 
+import com.chriserus.hibernate.HibernateUtil;
 import javafx.application.Platform;
 import javafx.geometry.Insets;
 import javafx.scene.Scene;
@@ -77,14 +78,14 @@ public class DashBoard {
     }
 
     private void appClose() {
-        SessionFactory sessionFactory = HibernateFactory.getSessionFactory();
+        SessionFactory sessionFactory = HibernateUtil.getSessionFactory();
         Session session = sessionFactory.getCurrentSession();
         session.beginTransaction();
-        session.createQuery("delete from PurchaseEntity").executeUpdate();
-        session.createQuery("delete from ClientEntity ").executeUpdate();
+        session.createQuery("delete from Purchase").executeUpdate();
+        session.createQuery("delete from Client ").executeUpdate();
         session.getTransaction().commit();
         Platform.exit();
-        HibernateFactory.close();
+        HibernateUtil.shutdown();
     }
 
     class CustomerButton extends Button {
@@ -96,7 +97,7 @@ public class DashBoard {
             this.setText("Add a new customer");
             FileInputStream inputStream = null;
             try {
-                inputStream = new FileInputStream("resources/icons/table");
+                inputStream = new FileInputStream(Thread.currentThread().getContextClassLoader().getResource("icons/table").getPath());
             } catch (FileNotFoundException e) {
                 e.printStackTrace();
             }

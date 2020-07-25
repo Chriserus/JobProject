@@ -1,8 +1,9 @@
 package com.chriserus;
 
-import com.chriserus.hibernate.ClientEntity;
-import com.chriserus.hibernate.ItemEntity;
-import com.chriserus.hibernate.PurchaseEntity;
+import com.chriserus.hibernate.Client;
+import com.chriserus.hibernate.HibernateUtil;
+import com.chriserus.hibernate.Item;
+import com.chriserus.hibernate.Purchase;
 import javafx.collections.ObservableList;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
@@ -22,10 +23,10 @@ import java.math.RoundingMode;
 import java.util.List;
 
 public class OrderBox extends MenuBox{
-    private TableView<ItemEntity> table, tableOrder;
+    private TableView<Item> table, tableOrder;
     private TextField caloriesSum, priceSum;
-    private ObservableList<ItemEntity> productSelected, wholeOrder;
-    private ClientEntity currentClient;
+    private ObservableList<Item> productSelected, wholeOrder;
+    private Client currentClient;
     private Stage window;
     private TableBox tableBox;
     private List<TableBox.SeatButton> tableButtons;
@@ -37,7 +38,7 @@ public class OrderBox extends MenuBox{
         this.number = number;
     }
 
-    public void display(ClientEntity client) {
+    public void display(Client client) {
         currentClient = client;
 
         window = new Stage();
@@ -47,44 +48,44 @@ public class OrderBox extends MenuBox{
         tableOrder = new TableView<>();
 
         //Name
-        TableColumn<ItemEntity, String> nameCol = new TableColumn<>("Name");
+        TableColumn<Item, String> nameCol = new TableColumn<>("Name");
         nameCol.setMinWidth(200);
         nameCol.setCellValueFactory(new PropertyValueFactory<>("name"));
 
         //Price
-        TableColumn<ItemEntity, Double> priceCol = new TableColumn<>("Price");
+        TableColumn<Item, Double> priceCol = new TableColumn<>("Price");
         priceCol.setMinWidth(200);
         priceCol.setCellValueFactory(new PropertyValueFactory<>("price"));
 
         //Calories
-        TableColumn<ItemEntity, Integer> caloriesCol = new TableColumn<>("Calories");
+        TableColumn<Item, Integer> caloriesCol = new TableColumn<>("Calories");
         caloriesCol.setMinWidth(200);
         caloriesCol.setCellValueFactory(new PropertyValueFactory<>("calories"));
 
         //Vegetarian
-        TableColumn<ItemEntity, Boolean> vegetarianCol = new TableColumn<>("Vegetarian");
+        TableColumn<Item, Boolean> vegetarianCol = new TableColumn<>("Vegetarian");
         vegetarianCol.setMinWidth(200);
         vegetarianCol.setCellValueFactory(new PropertyValueFactory<>("vegetarian"));
 
         //SECOND TABLE COLUMNS, CAN'T REUSE COLUMN OBJECTS
 
         //Name
-        TableColumn<ItemEntity, String> nameColO = new TableColumn<>("Name");
+        TableColumn<Item, String> nameColO = new TableColumn<>("Name");
         nameColO.setMinWidth(200);
         nameColO.setCellValueFactory(new PropertyValueFactory<>("name"));
 
         //Price
-        TableColumn<ItemEntity, Double> priceColO = new TableColumn<>("Price");
+        TableColumn<Item, Double> priceColO = new TableColumn<>("Price");
         priceColO.setMinWidth(200);
         priceColO.setCellValueFactory(new PropertyValueFactory<>("price"));
 
         //Calories
-        TableColumn<ItemEntity, Integer> caloriesColO = new TableColumn<>("Calories");
+        TableColumn<Item, Integer> caloriesColO = new TableColumn<>("Calories");
         caloriesColO.setMinWidth(200);
         caloriesColO.setCellValueFactory(new PropertyValueFactory<>("calories"));
 
         //Vegetarian
-        TableColumn<ItemEntity, Boolean> vegetarianColO = new TableColumn<>("Vegetarian");
+        TableColumn<Item, Boolean> vegetarianColO = new TableColumn<>("Vegetarian");
         vegetarianColO.setMinWidth(200);
         vegetarianColO.setCellValueFactory(new PropertyValueFactory<>("vegetarian"));
 
@@ -180,7 +181,7 @@ public class OrderBox extends MenuBox{
     private double sumPrice(){
         double sum = 0;
         wholeOrder = tableOrder.getItems();
-        for(ItemEntity item : wholeOrder)
+        for(Item item : wholeOrder)
             sum += item.getPrice();
 
         //truncate, double had binary value, thus many 000000
@@ -192,7 +193,7 @@ public class OrderBox extends MenuBox{
     private int sumCalories(){
         int sum = 0;
         wholeOrder = tableOrder.getItems();
-        for(ItemEntity item : wholeOrder)
+        for(Item item : wholeOrder)
             sum += item.getCalories();
         return sum;
     }
@@ -200,7 +201,7 @@ public class OrderBox extends MenuBox{
     //Deletes the client and exits
     private void deleteClient(){
         //getting the factory
-        SessionFactory sessionFactory = HibernateFactory.getSessionFactory();
+        SessionFactory sessionFactory = HibernateUtil.getSessionFactory();
         Session session = sessionFactory.getCurrentSession();
         //Deleting a customer
         session.beginTransaction();
@@ -212,17 +213,17 @@ public class OrderBox extends MenuBox{
     //Update client info (total calories and order price) and makes Purchase entity, updates db
     private void finalizeButtonClicked() {
         //getting the factory
-        SessionFactory sessionFactory = HibernateFactory.getSessionFactory();
+        SessionFactory sessionFactory = HibernateUtil.getSessionFactory();
         Session session = sessionFactory.getCurrentSession();
         session.beginTransaction();
         //Updating the customer
-        ClientEntity client = session.get(ClientEntity.class, currentClient.getId());
+        Client client = session.get(Client.class, currentClient.getId());
         client.setCaloriesTotal(sumCalories());
         client.setOrderTotal(sumPrice());
 
         //Creating and sending an order
-        for(ItemEntity item : tableOrder.getItems()){
-            PurchaseEntity purchase = new PurchaseEntity(currentClient, item);
+        for(Item item : tableOrder.getItems()){
+            Purchase purchase = new Purchase(currentClient, item);
             session.save(purchase);
         }
         session.getTransaction().commit();
@@ -232,7 +233,7 @@ public class OrderBox extends MenuBox{
         TableBox.SeatButton button = tableButtons.get(number);
         button.setOccupied(true);
         button.updateButton();
-        button.setClientEntity(currentClient);
+        button.setClient(currentClient);
     }
 
     private void addButtonClicked(){
@@ -244,7 +245,7 @@ public class OrderBox extends MenuBox{
     }
 
     private void deleteButtonClicked(){
-        ObservableList<ItemEntity> allProducts = tableOrder.getItems();
+        ObservableList<Item> allProducts = tableOrder.getItems();
         productSelected = tableOrder.getSelectionModel().getSelectedItems();
         productSelected.forEach(allProducts::remove);
         String price = String.format("%.2f", sumPrice());

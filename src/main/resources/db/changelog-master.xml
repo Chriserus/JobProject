@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xmlns:pro="http://www.liquibase.org/xml/ns/pro"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.8.xsd
+         http://www.liquibase.org/xml/ns/pro http://www.liquibase.org/xml/ns/pro/liquibase-pro-3.8.xsd">
+
+    <changeSet id="createClientTable" author="Chriserus">
+        <createTable tableName="client">
+            <column name="id" type="int" autoIncrement="true">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="first_name" type="varchar(255)"/>
+            <column name="second_name" type="varchar(255)"/>
+            <column name="vegetarian" type="boolean"/>
+            <column name="table_number" type="int"/>
+            <column name="finished" type="datetime"/>
+            <column name="order_number" type="int"/>
+            <column name="order_total" type="int"/>
+            <column name="calories_total" type="int"/>
+        </createTable>
+    </changeSet>
+    <changeSet id="createItemTable" author="Chriserus">
+        <createTable tableName="item">
+            <column name="id" type="int" autoIncrement="true">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="name" type="varchar(255)"/>
+            <column name="price" type="int"/>
+            <column name="calories" type="int"/>
+            <column name="vegetarian" type="boolean"/>
+        </createTable>
+    </changeSet>
+    <changeSet id="createPurchaseTable" author="Chriserus">
+        <createTable tableName="purchase">
+            <column name="id" type="int" autoIncrement="true">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="client" type="int">
+                <constraints nullable="false" foreignKeyName="fk_client" references="client(id)"/>
+            </column>
+            <column name="item" type="int">
+                <constraints nullable="false" foreignKeyName="fk_item" references="item(id)"/>
+            </column>
+        </createTable>
+    </changeSet>
+</databaseChangeLog>

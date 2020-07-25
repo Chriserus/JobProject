@@ -1,6 +1,7 @@
 package com.chriserus;
 
-import com.chriserus.hibernate.ItemEntity;
+import com.chriserus.hibernate.HibernateUtil;
+import com.chriserus.hibernate.Item;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.geometry.Insets;
@@ -19,7 +20,7 @@ import java.util.List;
 public class MenuBox {
     private  TextField nameInput, priceInput, caloriesInput;
     private  CheckBox isVegBox;
-    private  TableView<ItemEntity> table;
+    private  TableView<Item> table;
 
     public  void displayMenu(){
         Stage window = new Stage();
@@ -34,22 +35,22 @@ public class MenuBox {
         table = new TableView<>();
 
         //Name
-        TableColumn<ItemEntity, String> nameCol = new TableColumn<>("Name");
+        TableColumn<Item, String> nameCol = new TableColumn<>("Name");
         nameCol.setMinWidth(200);
         nameCol.setCellValueFactory(new PropertyValueFactory<>("name"));
 
         //Price
-        TableColumn<ItemEntity, Double> priceCol = new TableColumn<>("Price");
+        TableColumn<Item, Double> priceCol = new TableColumn<>("Price");
         priceCol.setMinWidth(200);
         priceCol.setCellValueFactory(new PropertyValueFactory<>("price"));
 
         //Calories
-        TableColumn<ItemEntity, Integer> caloriesCol = new TableColumn<>("Calories");
+        TableColumn<Item, Integer> caloriesCol = new TableColumn<>("Calories");
         caloriesCol.setMinWidth(200);
         caloriesCol.setCellValueFactory(new PropertyValueFactory<>("calories"));
 
         //Vegetarian
-        TableColumn<ItemEntity, Boolean> vegetarianCol = new TableColumn<>("Vegetarian");
+        TableColumn<Item, Boolean> vegetarianCol = new TableColumn<>("Vegetarian");
         vegetarianCol.setMinWidth(200);
         vegetarianCol.setCellValueFactory(new PropertyValueFactory<>("vegetarian"));
 
@@ -100,23 +101,23 @@ public class MenuBox {
         window.show();
     }
 
-    ObservableList<ItemEntity> getProduct(boolean isVeg){
+    ObservableList<Item> getProduct(boolean isVeg){
 
-        List<ItemEntity> itemsList;
-        ObservableList<ItemEntity> products;
+        List<Item> itemsList;
+        ObservableList<Item> products;
         //getting the factory
-        SessionFactory sessionFactory = HibernateFactory.getSessionFactory();
+        SessionFactory sessionFactory = HibernateUtil.getSessionFactory();
         Session session = sessionFactory.getCurrentSession();
         //getting the list of items
 
         if(isVeg){
             session.beginTransaction();
-            itemsList = session.createQuery("from ItemEntity where vegetarian=true ").getResultList();
+            itemsList = session.createQuery("from Item where vegetarian=true ").getResultList();
             products = FXCollections.observableArrayList(itemsList);
             session.getTransaction().commit();
         }else{
             session.beginTransaction();
-            itemsList = session.createQuery("from ItemEntity ").getResultList();
+            itemsList = session.createQuery("from Item ").getResultList();
             products = FXCollections.observableArrayList(itemsList);
             session.getTransaction().commit();
         }
@@ -124,7 +125,7 @@ public class MenuBox {
     }
 
     private void addButtonClicked(){
-        ItemEntity product = new ItemEntity();
+        Item product = new Item();
         product.setName(nameInput.getText());
         product.setPrice(Double.parseDouble(priceInput.getText()));
         product.setCalories(Integer.parseInt(caloriesInput.getText()));
@@ -132,7 +133,7 @@ public class MenuBox {
         table.getItems().add(product);
 
         //Sending product to db
-        SessionFactory sessionFactory = HibernateFactory.getSessionFactory();
+        SessionFactory sessionFactory = HibernateUtil.getSessionFactory();
         Session session = sessionFactory.getCurrentSession();
 
         session.beginTransaction();
@@ -148,17 +149,17 @@ public class MenuBox {
     }
 
     private void deleteButtonClicked(){
-        ObservableList<ItemEntity> productSelected, allProducts;
+        ObservableList<Item> productSelected, allProducts;
         allProducts = table.getItems();
         productSelected = table.getSelectionModel().getSelectedItems();
 
 try{
     //Deleting product from db
-    SessionFactory sessionFactory = HibernateFactory.getSessionFactory();
+    SessionFactory sessionFactory = HibernateUtil.getSessionFactory();
     Session session = sessionFactory.getCurrentSession();
 
     session.beginTransaction();
-    ItemEntity product = table.getSelectionModel().getSelectedItem();
+    Item product = table.getSelectionModel().getSelectedItem();
     session.delete(product);
     session.getTransaction().commit();
 

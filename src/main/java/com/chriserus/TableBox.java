@@ -1,6 +1,6 @@
 package com.chriserus;
 
-import com.chriserus.hibernate.ClientEntity;
+import com.chriserus.hibernate.Client;
 import javafx.geometry.Insets;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
@@ -78,7 +78,7 @@ public class TableBox {
         int number;
         OccupiedBox occupiedBox;
         CreatingBox creatingBox;
-        ClientEntity client;
+        Client client;
 
         SeatButton() {
             super();
@@ -86,7 +86,7 @@ public class TableBox {
             occupied = false;
         }
 
-        public void setClientEntity(ClientEntity client) {
+        public void setClient(Client client) {
             this.client = client;
         }
 
@@ -109,7 +109,7 @@ public class TableBox {
                 //setting graphic. occupied (person)...
                 FileInputStream inputStream = null;
                 try {
-                    inputStream = new FileInputStream("resources/icons/person");
+                    inputStream = new FileInputStream(Thread.currentThread().getContextClassLoader().getResource("icons/person").getPath());
                 } catch (FileNotFoundException e) {
                     e.printStackTrace();
                 }
@@ -119,8 +119,8 @@ public class TableBox {
                 //button action when occupied (click)
                 this.setOnAction(e -> {
                     //sends client to occupiedBox
-                    if (occupiedBox.getClientEntity() == null) {
-                        occupiedBox.setClientEntity(client);
+                    if (occupiedBox.getClient() == null) {
+                        occupiedBox.setClient(client);
                     }
 
                     occupiedBox.display();
@@ -129,7 +129,7 @@ public class TableBox {
                 //or not occupied (addNew)...
                 FileInputStream inputStream = null;
                 try {
-                    inputStream = new FileInputStream("resources/icons/addNew");
+                    inputStream = new FileInputStream(Thread.currentThread().getContextClassLoader().getResource("icons/addNew").getPath());
                 } catch (FileNotFoundException e) {
                     e.printStackTrace();
                 }

@@ -4,27 +4,24 @@ import javax.persistence.*;
 import java.util.Objects;
 
 @Entity
-@Table(name = "Item", schema = "restaurant")
-public class ItemEntity {
+public class Item {
+
+    @Id
     private int id;
     private String name;
     private double price;
     private int calories;
     private boolean vegetarian;
 
-    public ItemEntity() {
+    public Item() {
     }
 
-    public ItemEntity(String name, double price, int calories, boolean vegetarian) {
+    public Item(String name, double price, int calories, boolean vegetarian) {
         this.name = name;
         this.price = price;
         this.calories = calories;
         this.vegetarian = vegetarian;
     }
-
-    @Id
-    @Column(name = "id", nullable = false)
-    @GeneratedValue(strategy = GenerationType.AUTO)
     public int getId() {
         return id;
     }
@@ -33,8 +30,6 @@ public class ItemEntity {
         this.id = id;
     }
 
-    @Basic
-    @Column(name = "name", nullable = false, length = 150)
     public String getName() {
         return name;
     }
@@ -43,8 +38,6 @@ public class ItemEntity {
         this.name = name;
     }
 
-    @Basic
-    @Column(name = "price", nullable = false, precision = 0)
     public double getPrice() {
         return price;
     }
@@ -53,8 +46,6 @@ public class ItemEntity {
         this.price = price;
     }
 
-    @Basic
-    @Column(name = "calories", nullable = false)
     public int getCalories() {
         return calories;
     }
@@ -63,8 +54,6 @@ public class ItemEntity {
         this.calories = calories;
     }
 
-    @Basic
-    @Column(name = "vegetarian", nullable = false)
     public boolean isVegetarian() {
         return vegetarian;
     }
@@ -77,7 +66,7 @@ public class ItemEntity {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        ItemEntity that = (ItemEntity) o;
+        Item that = (Item) o;
         return id == that.id &&
                 Double.compare(that.price, price) == 0 &&
                 calories == that.calories &&

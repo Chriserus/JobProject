@@ -1,6 +1,7 @@
 package com.chriserus;
 
-import com.chriserus.hibernate.ClientEntity;
+import com.chriserus.hibernate.Client;
+import com.chriserus.hibernate.HibernateUtil;
 import javafx.geometry.Insets;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
@@ -89,10 +90,10 @@ public class CreatingBox{
         if(isName(nameInput, surnameInput)){
             window.close();
             //getting the factory
-            SessionFactory sessionFactory = HibernateFactory.getSessionFactory();
+            SessionFactory sessionFactory = HibernateUtil.getSessionFactory();
             Session session = sessionFactory.getCurrentSession();
             //Creating a customer
-            ClientEntity tempClient = new ClientEntity(nameInput.getText(), surnameInput.getText(), isVegBox.isSelected());
+            Client tempClient = new Client(nameInput.getText(), surnameInput.getText(), isVegBox.isSelected());
             //Sending a customer
             session.beginTransaction();
             session.save(tempClient);
