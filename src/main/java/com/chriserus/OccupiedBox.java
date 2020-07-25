@@ -9,7 +9,10 @@ import javafx.collections.ObservableList;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
-import javafx.scene.control.*;
+import javafx.scene.control.Button;
+import javafx.scene.control.Label;
+import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.VBox;
@@ -25,16 +28,16 @@ public class OccupiedBox {
 
     private Client client;
     private Button finishedButton, cancelButton;
-    private Label nameAndSurname, price,  calories;
+    private Label nameAndSurname, price, calories;
     private GridPane grid;
     private TableView<Item> orderTable;
-    private int currentClientId;
+    private Long currentClientId;
     private Scene scene;
     private Stage window;
     private VBox vBox;
 
 
-    OccupiedBox(){
+    OccupiedBox() {
         finishedButton = new Button("Print receipt");
         cancelButton = new Button("Back");
         nameAndSurname = new Label();
@@ -51,26 +54,26 @@ public class OccupiedBox {
         this.client = client;
     }
 
-    public Client getClient(){
+    public Client getClient() {
         return client;
     }
 
 
-    private void setOrder(){
+    private void setOrder() {
         ObservableList<Item> products;
         //getting the factory
         SessionFactory sessionFactory = HibernateUtil.getSessionFactory();
         Session session = sessionFactory.getCurrentSession();
         session.beginTransaction();
         //getting list of x client items ordered
-         //itemList = session.createQuery("from Purchase as p where p.clientByClientId=" + currentClientId)
-               // .getResultList();
+        //itemList = session.createQuery("from Purchase as p where p.clientByClientId=" + currentClientId)
+        // .getResultList();
 
         List<Purchase> purchaseList = session.createQuery
-                ("from Purchase where clientByClientid.id="+currentClientId).getResultList();
+                ("from Purchase p where p.client.id=" + currentClientId ).getResultList();
         System.out.println(purchaseList);
         ArrayList<Item> itemList = new ArrayList<>();
-        for(Purchase p : purchaseList){
+        for (Purchase p : purchaseList) {
             itemList.add(p.getItem());
         }
         products = FXCollections.observableArrayList(itemList);
@@ -82,7 +85,7 @@ public class OccupiedBox {
 
     }
 
-    public void display(){
+    public void display() {
 
         //getting the factory
         SessionFactory sessionFactory = HibernateUtil.getSessionFactory();
@@ -93,7 +96,7 @@ public class OccupiedBox {
         this.client.setCaloriesTotal(client.getCaloriesTotal());
         this.client.setOrderTotal(client.getOrderTotal());
         currentClientId = this.client.getId();
-        System.out.println("I got id nr: "+currentClientId);
+        System.out.println("I got id nr: " + currentClientId);
         //Creating and sending an order
         session.getTransaction().commit();
 
@@ -102,29 +105,26 @@ public class OccupiedBox {
         window.setTitle("Current client");
 
         System.out.println("I got client: " + this.client.getFirstName() + this.client.getSecondName() + this.client.getId() +
-        " " + this.client.getOrderTotal());
+                " " + this.client.getOrderTotal());
         //creating gui components
-        price.setText("Total price: " + "\n"+"$"+ this.client.getOrderTotal().toString());
+        price.setText("Total price: " + "\n" + "$" + this.client.getOrderTotal().toString());
         price.setMinWidth(200);
-        calories.setText("Total calories: " +"\n"+ this.client.getCaloriesTotal().toString());
+        calories.setText("Total calories: " + "\n" + this.client.getCaloriesTotal().toString());
         calories.setMinWidth(200);
-        nameAndSurname.setText("Name and surname: "+"\n"+ this.client.getFirstName() + " " + this.client.getSecondName());
+        nameAndSurname.setText("Name and surname: " + "\n" + this.client.getFirstName() + " " + this.client.getSecondName());
         nameAndSurname.setMinWidth(200);
 
-        if(vBox.getChildren().isEmpty()){
+        if (vBox.getChildren().isEmpty()) {
             vBox.setSpacing(10);
             vBox.setAlignment(Pos.CENTER_LEFT);
             vBox.getChildren().addAll(nameAndSurname, price, calories);
         }
 
 
-
-
-
         finishedButton.setMinWidth(200);
         cancelButton.setMinWidth(100);
 
-        if(orderTable.getColumns().isEmpty()){
+        if (orderTable.getColumns().isEmpty()) {
             //Name
             TableColumn<Item, String> nameCol = new TableColumn<>("Name");
             nameCol.setMinWidth(180);
@@ -146,28 +146,23 @@ public class OccupiedBox {
             vegetarianCol.setCellValueFactory(new PropertyValueFactory<>("vegetarian"));
 
             orderTable.setMinHeight(800);
-            orderTable.getColumns().addAll(nameCol,priceCol,caloriesCol,vegetarianCol);
+            orderTable.getColumns().addAll(nameCol, priceCol, caloriesCol, vegetarianCol);
         }
 
 
-
-
-
-
         GridPane.setConstraints(vBox, 0, 0);
-        GridPane.setConstraints(finishedButton,2,3);
-        GridPane.setConstraints(cancelButton,0,3);
+        GridPane.setConstraints(finishedButton, 2, 3);
+        GridPane.setConstraints(cancelButton, 0, 3);
         GridPane.setConstraints(orderTable, 1, 0, 2, 2);
 
 
         grid.setPadding(new Insets(10, 10, 10, 10));
         grid.setVgap(8);
         grid.setHgap(10);
-        if(grid.getChildren().isEmpty()){
-            grid.getChildren().addAll(vBox,finishedButton,cancelButton, orderTable);
+        if (grid.getChildren().isEmpty()) {
+            grid.getChildren().addAll(vBox, finishedButton, cancelButton, orderTable);
             scene = new Scene(grid, 1000, 900);
         }
-
 
 
         window.setScene(scene);

@@ -35,8 +35,7 @@ public class SnakeCasePhysicalNamingStrategy extends PhysicalNamingStrategyStand
 
     private Identifier toSnakeCase(Identifier id) {
         if (id == null)
-            return id;
-
+            return null;
         String name = id.getText();
         String snakeName = name.replaceAll("([a-z]+)([A-Z]+)", "$1\\_$2").toLowerCase();
         if (!snakeName.equals(name))

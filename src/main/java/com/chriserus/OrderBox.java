@@ -8,7 +8,11 @@ import javafx.collections.ObservableList;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
-import javafx.scene.control.*;
+import javafx.scene.control.Button;
+import javafx.scene.control.Label;
+import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableView;
+import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
@@ -22,7 +26,7 @@ import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.util.List;
 
-public class OrderBox extends MenuBox{
+public class OrderBox extends MenuBox {
     private TableView<Item> table, tableOrder;
     private TextField caloriesSum, priceSum;
     private ObservableList<Item> productSelected, wholeOrder;
@@ -32,7 +36,7 @@ public class OrderBox extends MenuBox{
     private List<TableBox.SeatButton> tableButtons;
     private int number;
 
-    OrderBox(TableBox tableBox, int number){
+    OrderBox(TableBox tableBox, int number) {
         this.tableBox = tableBox;
         this.tableButtons = tableBox.getTableButtons();
         this.number = number;
@@ -178,10 +182,10 @@ public class OrderBox extends MenuBox{
 
     }
 
-    private double sumPrice(){
+    private double sumPrice() {
         double sum = 0;
         wholeOrder = tableOrder.getItems();
-        for(Item item : wholeOrder)
+        for (Item item : wholeOrder)
             sum += item.getPrice();
 
         //truncate, double had binary value, thus many 000000
@@ -190,16 +194,16 @@ public class OrderBox extends MenuBox{
         return sum;
     }
 
-    private int sumCalories(){
+    private int sumCalories() {
         int sum = 0;
         wholeOrder = tableOrder.getItems();
-        for(Item item : wholeOrder)
+        for (Item item : wholeOrder)
             sum += item.getCalories();
         return sum;
     }
 
     //Deletes the client and exits
-    private void deleteClient(){
+    private void deleteClient() {
         //getting the factory
         SessionFactory sessionFactory = HibernateUtil.getSessionFactory();
         Session session = sessionFactory.getCurrentSession();
@@ -222,7 +226,7 @@ public class OrderBox extends MenuBox{
         client.setOrderTotal(sumPrice());
 
         //Creating and sending an order
-        for(Item item : tableOrder.getItems()){
+        for (Item item : tableOrder.getItems()) {
             Purchase purchase = new Purchase(currentClient, item);
             session.save(purchase);
         }
@@ -236,7 +240,7 @@ public class OrderBox extends MenuBox{
         button.setClient(currentClient);
     }
 
-    private void addButtonClicked(){
+    private void addButtonClicked() {
         productSelected = table.getSelectionModel().getSelectedItems();
         tableOrder.getItems().addAll(productSelected);
         String price = String.format("%.2f", sumPrice());
@@ -244,7 +248,7 @@ public class OrderBox extends MenuBox{
         resetSum(price, calories);
     }
 
-    private void deleteButtonClicked(){
+    private void deleteButtonClicked() {
         ObservableList<Item> allProducts = tableOrder.getItems();
         productSelected = tableOrder.getSelectionModel().getSelectedItems();
         productSelected.forEach(allProducts::remove);
@@ -253,8 +257,8 @@ public class OrderBox extends MenuBox{
         resetSum(price, calories);
     }
 
-    private void resetSum(String price, String calories){
-        priceSum.setText("$"+price);
+    private void resetSum(String price, String calories) {
+        priceSum.setText("$" + price);
         caloriesSum.setText(calories);
     }
 

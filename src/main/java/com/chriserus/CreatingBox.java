@@ -14,19 +14,19 @@ import javafx.stage.Stage;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 
-public class CreatingBox{
+public class CreatingBox {
     private TextField nameInput, surnameInput;
     private Stage window;
     private CheckBox isVegBox;
     private TableBox tableBox;
     private int number;
 
-    CreatingBox(TableBox tableBox, int number){
+    CreatingBox(TableBox tableBox, int number) {
         this.tableBox = tableBox;
         this.number = number;
     }
 
-    public void display(){
+    public void display() {
         window = new Stage();
 
         window.initModality(Modality.APPLICATION_MODAL);
@@ -72,22 +72,22 @@ public class CreatingBox{
         GridPane.setConstraints(isVegBox, 1, 2);
 
 
-        submitButton.setOnAction(e->submitButtonClicked());
+        submitButton.setOnAction(e -> submitButtonClicked());
 
         //Cancel button action
-        cancelButton.setOnAction(e->window.close());
+        cancelButton.setOnAction(e -> window.close());
 
         grid.getChildren().addAll(nameLabel, nameInput, surnameLabel, surnameInput, cancelButton, submitButton, isVegBox);
 
         Scene scene = new Scene(grid, 300, 200);
         window.setScene(scene);
         window.showAndWait();
-      //  return occupied;
+        //  return occupied;
     }
 
     //Taking input via submitButton and creating new Customer object
-    private void submitButtonClicked(){
-        if(isName(nameInput, surnameInput)){
+    private void submitButtonClicked() {
+        if (isName(nameInput, surnameInput)) {
             window.close();
             //getting the factory
             SessionFactory sessionFactory = HibernateUtil.getSessionFactory();
@@ -101,19 +101,19 @@ public class CreatingBox{
 
             OrderBox orderBox = new OrderBox(tableBox, number);
             orderBox.display(tempClient);
-        }else{
+        } else {
             AlertBox boxA = new AlertBox();
             boxA.display("This is not a valid name/surname!");
         }
     }
 
     //Name and surname validation
-    private boolean isName(TextField inputName, TextField inputSurname){
-        if(!(inputName.getText() + " " + inputSurname.getText()).matches("[A-Z][a-z]+( [A-Z][a-z]+)?")){
+    private boolean isName(TextField inputName, TextField inputSurname) {
+        if (!(inputName.getText() + " " + inputSurname.getText()).matches("[A-Z][a-z]+( [A-Z][a-z]+)?")) {
             inputName.setText("");
             inputSurname.setText("");
             return false;
-        }else{
+        } else {
             return true;
         }
     }

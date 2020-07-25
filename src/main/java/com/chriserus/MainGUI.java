@@ -13,5 +13,5 @@ public class MainGUI extends Application {
     public void start(Stage window) {
         DashBoard dashBoard = new DashBoard(window);
         dashBoard.displayDash();
-}
+    }
 }

@@ -10,7 +10,7 @@ import javafx.stage.Stage;
 
 public class AlertBox {
 
-    public void display(String message){
+    public void display(String message) {
         Stage window = new Stage();
 
         window.initModality(Modality.APPLICATION_MODAL);
@@ -29,8 +29,6 @@ public class AlertBox {
         Scene scene = new Scene(layout);
         window.setScene(scene);
         window.showAndWait();
-
-
 
 
     }

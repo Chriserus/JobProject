@@ -78,12 +78,12 @@ public class DashBoard {
     }
 
     private void appClose() {
-        SessionFactory sessionFactory = HibernateUtil.getSessionFactory();
-        Session session = sessionFactory.getCurrentSession();
-        session.beginTransaction();
-        session.createQuery("delete from Purchase").executeUpdate();
-        session.createQuery("delete from Client ").executeUpdate();
-        session.getTransaction().commit();
+//        SessionFactory sessionFactory = HibernateUtil.getSessionFactory();
+//        Session session = sessionFactory.getCurrentSession();
+//        session.beginTransaction();
+//        session.createQuery("delete from Purchase").executeUpdate();
+//        session.createQuery("delete from Client ").executeUpdate();
+//        session.getTransaction().commit();
         Platform.exit();
         HibernateUtil.shutdown();
     }

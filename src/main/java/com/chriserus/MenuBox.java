@@ -6,7 +6,11 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.geometry.Insets;
 import javafx.scene.Scene;
-import javafx.scene.control.*;
+import javafx.scene.control.Button;
+import javafx.scene.control.CheckBox;
+import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableView;
+import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
@@ -18,11 +22,11 @@ import org.hibernate.SessionFactory;
 import java.util.List;
 
 public class MenuBox {
-    private  TextField nameInput, priceInput, caloriesInput;
-    private  CheckBox isVegBox;
-    private  TableView<Item> table;
+    private TextField nameInput, priceInput, caloriesInput;
+    private CheckBox isVegBox;
+    private TableView<Item> table;
 
-    public  void displayMenu(){
+    public void displayMenu() {
         Stage window = new Stage();
 
         //Adding labels and textFields
@@ -56,7 +60,7 @@ public class MenuBox {
 
         table.setItems(getProduct(false));
         table.setMinHeight(800);
-        table.getColumns().addAll(nameCol,priceCol,caloriesCol,vegetarianCol);
+        table.getColumns().addAll(nameCol, priceCol, caloriesCol, vegetarianCol);
 
         //Creating input fields
         nameInput.setPromptText("Name");
@@ -75,9 +79,8 @@ public class MenuBox {
         deleteButton.setMinWidth(100);
 
         //Adding functionality to buttons
-        addButton.setOnAction(e->addButtonClicked());
-        deleteButton.setOnAction(e->deleteButtonClicked());
-
+        addButton.setOnAction(e -> addButtonClicked());
+        deleteButton.setOnAction(e -> deleteButtonClicked());
 
 
         HBox hBox = new HBox();
@@ -88,7 +91,7 @@ public class MenuBox {
         HBox hBox2 = new HBox();
         hBox2.setPadding(new Insets(10, 10, 10, 10));
         hBox2.setSpacing(10);
-        hBox2.getChildren().addAll(addButton,deleteButton);
+        hBox2.getChildren().addAll(addButton, deleteButton);
 
 
         window.initModality(Modality.APPLICATION_MODAL);
@@ -101,7 +104,7 @@ public class MenuBox {
         window.show();
     }
 
-    ObservableList<Item> getProduct(boolean isVeg){
+    ObservableList<Item> getProduct(boolean isVeg) {
 
         List<Item> itemsList;
         ObservableList<Item> products;
@@ -110,12 +113,12 @@ public class MenuBox {
         Session session = sessionFactory.getCurrentSession();
         //getting the list of items
 
-        if(isVeg){
+        if (isVeg) {
             session.beginTransaction();
             itemsList = session.createQuery("from Item where vegetarian=true ").getResultList();
             products = FXCollections.observableArrayList(itemsList);
             session.getTransaction().commit();
-        }else{
+        } else {
             session.beginTransaction();
             itemsList = session.createQuery("from Item ").getResultList();
             products = FXCollections.observableArrayList(itemsList);
@@ -124,7 +127,7 @@ public class MenuBox {
         return products;
     }
 
-    private void addButtonClicked(){
+    private void addButtonClicked() {
         Item product = new Item();
         product.setName(nameInput.getText());
         product.setPrice(Double.parseDouble(priceInput.getText()));
@@ -148,26 +151,26 @@ public class MenuBox {
 
     }
 
-    private void deleteButtonClicked(){
+    private void deleteButtonClicked() {
         ObservableList<Item> productSelected, allProducts;
         allProducts = table.getItems();
         productSelected = table.getSelectionModel().getSelectedItems();
 
-try{
-    //Deleting product from db
-    SessionFactory sessionFactory = HibernateUtil.getSessionFactory();
-    Session session = sessionFactory.getCurrentSession();
+        try {
+            //Deleting product from db
+            SessionFactory sessionFactory = HibernateUtil.getSessionFactory();
+            Session session = sessionFactory.getCurrentSession();
 
-    session.beginTransaction();
-    Item product = table.getSelectionModel().getSelectedItem();
-    session.delete(product);
-    session.getTransaction().commit();
+            session.beginTransaction();
+            Item product = table.getSelectionModel().getSelectedItem();
+            session.delete(product);
+            session.getTransaction().commit();
 
-    productSelected.forEach(allProducts::remove);
-}catch(Exception e){
-    AlertBox alert = new AlertBox();
-    alert.display("You can't delete that entry! \n Someone ordered it!");
-}
+            productSelected.forEach(allProducts::remove);
+        } catch (Exception e) {
+            AlertBox alert = new AlertBox();
+            alert.display("You can't delete that entry! \n Someone ordered it!");
+        }
 
 
     }
